@@ -22,6 +22,8 @@
 # define ERR_ARG "Error\nInvalid argument\n"
 # define ERR_FILE "Error\nInvalid file\n"
 # define ERR_MALLOC "Error\nMalloc failed\n"
+# define ERR_CHAR "Error\nI need an invalid char\n"
+# define ERR_COLOR "Error\nInvalid color\n"
 # define EMPTY 0
 # define NO 1
 # define SO 2

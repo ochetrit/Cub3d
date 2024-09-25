@@ -16,12 +16,10 @@ t_data	*init_data(char *file)
 {
 	t_data	*data;
 
-	printf("je passe ici\n");
 	data = malloc(sizeof(t_data));
 	if (!data)
 		return (ft_putstr_fd(ERR_MALLOC, STDERR), NULL);
 	data->fd = open(file, O_RDONLY);
-	printf("OHHHOHOHOHO\n");
 	if (data->fd < 0)
 	{
 		free(data);

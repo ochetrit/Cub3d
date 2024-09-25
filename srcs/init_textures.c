@@ -6,7 +6,7 @@
 /*   By: ochetrit <ochetrit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 09:21:12 by ochetrit          #+#    #+#             */
-/*   Updated: 2024/09/25 18:18:27 by ochetrit         ###   ########.fr       */
+/*   Updated: 2024/09/25 19:07:51 by ochetrit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ char	*str_extract(char *line, int k)
 		k++;
 	if (line[k] != '\n' || *str == '\0')
 		return (free(str), NULL);
-	printf("str: %s\n", str);
 	return (str);
 }
 
@@ -100,7 +99,6 @@ int	find_path_and_color(t_data *data)
 	while (data->line && check_data_content(data))
 	{
 		key = which_one(data->line);
-		printf("%d\n", key);
 		if (key == NO)
 			data->path_no = str_extract(data->line, key);
 		else if (key == SO)
