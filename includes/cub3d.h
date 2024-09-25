@@ -21,6 +21,7 @@
 # define STDERR STDERR_FILENO
 # define ERR_ARG "Error\nInvalid argument\n"
 # define ERR_FILE "Error\nInvalid file\n"
+# define ERR_MALLOC "Error\nMalloc failed\n"
 # define EMPTY 0
 # define NO 1
 # define SO 2

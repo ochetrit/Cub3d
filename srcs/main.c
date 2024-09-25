@@ -24,7 +24,7 @@ int	form_arg(char *arg)
 	return (true);
 }
 
-t_data	*parsing(int ac, char **av)
+t_data	*init(int ac, char **av)
 {
 	t_data	*data;
 
@@ -35,6 +35,8 @@ t_data	*parsing(int ac, char **av)
 		return (NULL);
 	if (!find_path_and_color(data))
 		return (free_data(data), NULL);
+	/* else if (!init_map(data))
+		return (free_data(data), NULL); */
 	return (data);
 }
 
@@ -42,8 +44,14 @@ int main(int ac, char **av)
 {
 	t_data	*data;
 
-	data = parsing(ac, av)
+	data = parsing(ac, av);
 	if (!data)
 		return (1);
+	ft_printf("path_no: %s\n", data->path_no);
+	ft_printf("path_so: %s\n", data->path_so);
+	ft_printf("path_we: %s\n", data->path_we);
+	ft_printf("path_ea: %s\n", data->path_ea);
+	ft_printf("c_color: %s,%s,%s\n", data->c_color[0], data->c_color[1], data->c_color[2]);
+	ft_printf("f_color: %s,%s,%s\n", data->f_color[0], data->f_color[1], data->f_color[2]);
 	return (free_data(data), 0);
 } 
