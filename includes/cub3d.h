@@ -51,3 +51,5 @@ typedef struct	s_data
 //// 1. Check that the file respects the rules ////
 t_data	*init_data(char *file);
 int	find_path_and_color(t_data *data);
+char	**build_color(char *line);
+void	free_data(t_data *data);

@@ -11,7 +11,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-SRCS = srcs/main.c srcs/free.c srcs/init_textures.c srcs/init_colors
+SRCS = srcs/main.c srcs/free.c srcs/init_textures.c srcs/init_colors.c srcs/init_data.c
 
 LIB_MLX = minilibx-linux/libmlx.a
 
@@ -23,7 +23,7 @@ CC = cc
 
 RM = rm -rf
 
-FLAGS = -Wall -Wextra -g3 -O3
+FLAGS = -Wall -Wextra -Werror -g3 -O3
 
 LDFLAGS = -L./libft -lft
 
