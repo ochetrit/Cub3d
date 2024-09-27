@@ -29,6 +29,7 @@ t_data	*init_data(char *file)
 	data->map = NULL;
 	data->map_height = 0;
 	data->map_width = 0;
+	data->map_start = 0;
 	data->path_no = NULL;
 	data->path_so = NULL;
 	data->path_we = NULL;

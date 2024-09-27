@@ -25,14 +25,27 @@ void	free_tab(char **tab, int len)
 	free(tab);
 }
 
+void	free_map(t_map **map)
+{
+	t_map	*current;
+	t_map	*next;
+
+	current = *map;
+	while (current)
+	{
+		next = current->next;
+		if (current->map)
+			free(current->map);
+		free(current);
+		current = next;
+	}
+	free(map);
+}
+
 void	free_data(t_data *data)
 {
 	if (data->fd > 0)
 		close(data->fd);
-	if (data->line)
-		free(data->line);
-	if (data->map)
-		free(data->map);
 	if (data->path_no)
 		free(data->path_no);
 	if (data->path_so)
@@ -42,8 +55,10 @@ void	free_data(t_data *data)
 	if (data->path_ea)
 		free(data->path_ea);
 	if (data->c_color)
-		free_tab(data->c_color, 3);
+		free(data->c_color);
 	if (data->f_color)
-		free_tab(data->f_color, 3);
+		free(data->f_color);
+	if (data->map)
+		free_map(data->map);
 	free(data);
 }

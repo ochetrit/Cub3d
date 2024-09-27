@@ -35,8 +35,9 @@ t_data	*parsing(int ac, char **av)
 		return (NULL);
 	if (!find_path_and_color(data))
 		return (free_data(data), NULL);
-	/* else if (!init_map(data))
-		return (free_data(data), NULL); */
+	init_color_key(data);
+	if (!init_map(data))
+		return (free_data(data), NULL);
 	return (data);
 }
 
@@ -47,11 +48,17 @@ int main(int ac, char **av)
 	data = parsing(ac, av);
 	if (!data)
 		return (1);
+	t_map *current = *data->map;
+	while (current)
+	{
+		printf("%s\n", current->map);
+		current = current->next;
+	}
 	printf("path_no: %s\n", data->path_no);
 	printf("path_so: %s\n", data->path_so);
 	printf("path_we: %s\n", data->path_we);
 	printf("path_ea: %s\n", data->path_ea);
-	printf("c_color: %s,%s,%s\n", data->c_color[0], data->c_color[1], data->c_color[2]);
-	printf("f_color: %s,%s,%s\n", data->f_color[0], data->f_color[1], data->f_color[2]);
+	printf("c_color: %d,%d,%d\n", data->c_color[0], data->c_color[1], data->c_color[2]);
+	printf("f_color: %d,%d,%d\n", data->f_color[0], data->f_color[1], data->f_color[2]);
 	return (free_data(data), 0);
 } 

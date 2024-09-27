@@ -6,7 +6,7 @@
 /*   By: ochetrit <ochetrit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 09:21:12 by ochetrit          #+#    #+#             */
-/*   Updated: 2024/09/25 19:07:51 by ochetrit         ###   ########.fr       */
+/*   Updated: 2024/09/27 17:48:15 by ochetrit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,29 +48,29 @@ int		len_path(char *line)
 	return (len);
 }
 
-char	*str_extract(char *line, int k)
+char	*str_extract(char *line, int *k)
 {
 	char	*str;
 
 	while (*line && (*line == ' ' || *line == '\t'))
 		line++;
 	line++;
-	if (k < C)
+	if (*k < C)
 		line++;
 	while (*line && (*line == ' ' || *line == '\t'))
 		line++;
-	k = len_path(line);
-	str = malloc(sizeof(char) * (k + 1));
+	*k = len_path(line);
+	str = malloc(sizeof(char) * (*k + 1));
 	if (!str)
-		return (ft_putstr_fd(ERR_MALLOC, STDERR), NULL);
-	k = -1;
-	while (line[++k] && line[k] != ' ' && line[k] != '\t' && line[k] != '\n')
-		str[k] = line[k];
-	str[k] = '\0';
-	while (line[k] && (line[k] == ' ' || line[k] == '\t'))
-		k++;
-	if (line[k] != '\n' || *str == '\0')
-		return (free(str), NULL);
+		return (ft_putstr_fd(ERR_MALLOC, STDERR), *k = ERROR, NULL);
+	*k = -1;
+	while (line[++*k] && line[*k] != ' ' && line[*k] != '\t' && line[*k] != '\n')
+		str[*k] = line[*k];
+	str[*k] = '\0';
+	while (line[*k] && (line[*k] == ' ' || line[*k] == '\t'))
+		*k += 1;
+	if (line[*k] != '\n' || *str == '\0')
+		return (free(str), *k = ERROR,  NULL);
 	return (str);
 }
 
@@ -95,27 +95,28 @@ int	find_path_and_color(t_data *data)
 {
 	int	key;
 
-	data->line = get_next_line(data->fd);
-	while (data->line && check_data_content(data))
+	data->line = get_next_line(data->fd, false);
+	while (data->line)
 	{
 		key = which_one(data->line);
 		if (key == NO)
-			data->path_no = str_extract(data->line, key);
+			data->path_no = str_extract(data->line, &key);
 		else if (key == SO)
-			data->path_so = str_extract(data->line, key);
+			data->path_so = str_extract(data->line, &key);
 		else if (key == WE)
-			data->path_we = str_extract(data->line, key);
+			data->path_we = str_extract(data->line, &key);
 		else if (key == EA)
-			data->path_ea = str_extract(data->line, key);
+			data->path_ea = str_extract(data->line, &key);
 		else if (key == C)
-			data->c_color = build_color(data->line);
+			data->c_color = build_color(data->line, &key);
 		else if (key == F)
-			data->f_color = build_color(data->line);
-		else if (key == ERROR)
-			return (free(data->line), false);
-		if (key != END)
-			free(data->line);
-		data->line = get_next_line(data->fd);
+			data->f_color = build_color(data->line, &key);
+		if (key == ERROR)
+			return (free(data->line), get_next_line(data->fd, true), false);
+		free(data->line);
+		if (!check_data_content(data))
+			return (true);
+		data->line = get_next_line(data->fd, false);
 	}
-	return (true);
-}
+	return (false);
+	}
