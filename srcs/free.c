@@ -33,9 +33,14 @@ void	free_map(t_map **map)
 	current = *map;
 	while (current)
 	{
-		next = current->next;
 		if (current->map)
 			free(current->map);
+		if (!current->next)
+		{
+			free(current);
+			break ;
+		}
+		next = current->next;
 		free(current);
 		current = next;
 	}

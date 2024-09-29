@@ -58,7 +58,7 @@ t_map	*ft_mapnew(char *line, int height)
 	while (line[new->x_start] && line[new->x_start] == ' ')
 		new->x_start++;
 	if (!line[new->x_start])
-		return (free(line), new);
+		return (free(line), new->map = NULL, new);
 	new->next = NULL;
 	return (new);
 }

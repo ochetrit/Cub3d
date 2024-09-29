@@ -100,7 +100,7 @@ int	init_map(t_data *data)
 		data->line = get_next_line(data->fd, false);
 	}
 	get_next_line(data->fd, true);
-	if (data->map_height == 0)
+	if (data->map_start == 0)
 		return (ft_putstr_fd(ERR_SPWN, STDERR), false);
-	return (parse_map(*data->map, data->map_height));
+	return (true);
 }

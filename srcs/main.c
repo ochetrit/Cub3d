@@ -38,6 +38,8 @@ t_data	*parsing(int ac, char **av)
 	init_color_key(data);
 	if (!init_map(data))
 		return (free_data(data), NULL);
+	else if (!parse_map(*data->map, data->map_height))
+		return (free_data(data), NULL);
 	return (data);
 }
 
