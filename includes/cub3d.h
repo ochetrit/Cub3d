@@ -17,6 +17,7 @@
 #include <fcntl.h>
 #include <stdbool.h>
 #include "../libft/libft.h"
+# include "../minilibx-linux/mlx.h"
 
 # define STDERR STDERR_FILENO
 # define ERR_ARG "Error\nInvalid argument\n"
@@ -24,6 +25,7 @@
 # define ERR_MALLOC "Error\nMalloc failed\n"
 # define ERR_CHAR "Error\nI need an invalid char\n"
 # define ERR_COLOR "Error\nInvalid color\n"
+# define ERR_MLX "Error\nMlx failed\n"
 # define EMPTY 0
 # define NO 1
 # define SO 2
@@ -33,6 +35,22 @@
 # define F 6
 # define ERROR 7
 # define END 8
+# define W_TITLE "Cub3D"
+# define W_WIDTH 640
+# define W_HEIGHT 480
+
+/*key*/
+# define DESTROY_NOTIF 17
+# define NO_EVENT_MASK 0
+
+// MSG
+# define ESC_MSG "\n\nQuitting the game. Thank you for playing!"
+
+typedef struct	s_point
+{
+	int	size_x;
+	int	size_y;
+}				t_point;
 
 typedef struct	s_data
 {
@@ -47,6 +65,9 @@ typedef struct	s_data
 	char	*path_ea;
 	char	**c_color;
 	char	**f_color;
+	void	*mlx_ptr;
+	void	*win;
+	t_point	screen_size;
 }				t_data;
 
 
@@ -54,4 +75,11 @@ typedef struct	s_data
 t_data	*init_data(char *file);
 int	find_path_and_color(t_data *data);
 char	**build_color(char *line);
+
+// FREE
 void	free_data(t_data *data);
+void	end_game(char *msg, t_data *data, int num);
+
+
+// INIT MLX
+void	init_mlx_data(t_data *data);

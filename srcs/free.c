@@ -47,3 +47,11 @@ void	free_data(t_data *data)
 		free_tab(data->f_color, 3);
 	free(data);
 }
+
+void	end_game(char *msg, t_data *data, int num)
+{
+	(void)num;
+	ft_putstr_fd(msg, STDERR);
+	free_data(data);
+	exit(num);
+}
