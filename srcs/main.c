@@ -38,7 +38,7 @@ t_data	*parsing(int ac, char **av)
 	init_color_key(data);
 	if (!init_map(data))
 		return (free_data(data), NULL);
-	else if (!parse_map(*data->map, data->map_height))
+	else if (!build_map(data, *data->map_list))
 		return (free_data(data), NULL);
 	return (data);
 }
@@ -50,11 +50,11 @@ int main(int ac, char **av)
 	data = parsing(ac, av);
 	if (!data)
 		return (1);
-	t_map *current = *data->map;
-	while (current)
+	int	i = 0;
+	while (data->map[i])
 	{
-		printf("%s\n", current->map);
-		current = current->next;
+		printf("%s\n", data->map[i]);
+		i++;
 	}
 	printf("path_no: %s\n", data->path_no);
 	printf("path_so: %s\n", data->path_so);

@@ -6,7 +6,7 @@
 /*   By: ochetrit <ochetrit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 19:25:00 by ochetrit          #+#    #+#             */
-/*   Updated: 2024/09/27 20:56:33 by ochetrit         ###   ########.fr       */
+/*   Updated: 2024/09/30 15:28:00 by ochetrit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,11 @@ t_map	*ft_maplast(t_map *lst)
 	return (current);
 }
 
-void	ft_mapadd_back(t_map **head, t_map *new)
+void	ft_mapadd_back(t_data *data, t_map **head, t_map *new)
 {
 	t_map	*last;
+	int		width;
+
 
 	if (head)
 	{
@@ -39,6 +41,14 @@ void	ft_mapadd_back(t_map **head, t_map *new)
 		}
 		else
 			*head = new;
+	}
+	if (new->map)
+	{
+		width = 0;
+		while (new->map[width])
+			width++;
+		if (width > data->map_width)
+			data->map_width = width;
 	}
 }
 

@@ -51,7 +51,8 @@ typedef struct	s_data
 {
 	int	fd;
 	char	*line;
-	t_map	**map;
+	t_map	**map_list;
+	char	**map;
 	int		map_height;
 	int		map_width;
 	int		map_start;
@@ -70,10 +71,11 @@ typedef struct	s_data
 t_data			*init_data(char *file);
 int				find_path_and_color(t_data *data);
 int				init_map(t_data *data);
+int				build_map(t_data *data, t_map *map);
 int				parse_map(t_map	*lst, int height);
 unsigned char	*build_color(char *line, int *key);
 void			init_color_key(t_data *data);
 void			free_data(t_data *data);
-void			ft_mapadd_back(t_map **head, t_map *new);
+void			ft_mapadd_back(t_data *data, t_map **head, t_map *new);
 t_map			*ft_mapnew(char *content, int map_height);
 t_map			*ft_maplast(t_map *lst);

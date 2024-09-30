@@ -64,6 +64,6 @@ void	free_data(t_data *data)
 	if (data->f_color)
 		free(data->f_color);
 	if (data->map)
-		free_map(data->map);
+		free_map(data->map_list);
 	free(data);
 }
