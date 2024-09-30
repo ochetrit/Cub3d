@@ -38,6 +38,10 @@
 # define W_TITLE "Cub3D"
 # define W_WIDTH 640
 # define W_HEIGHT 480
+# define NORTH 0
+# define SOUTH 1
+# define WEST 2
+# define EAST 3
 
 /*key*/
 # define DESTROY_NOTIF 17
@@ -51,6 +55,25 @@ typedef struct	s_point
 	int	size_x;
 	int	size_y;
 }				t_point;
+
+typedef struct texture
+{
+	char *north;
+	char *south;
+	char *west;
+	char *east;
+}				t_texture;
+
+
+typedef struct s_player
+{
+	double pos_x;
+	double pos_y;
+	double dir_x;
+	double dir_y;
+	double plane_x;
+	double plane_y;
+}				t_player;
 
 typedef struct	s_data
 {
@@ -67,7 +90,10 @@ typedef struct	s_data
 	char	**f_color;
 	void	*mlx_ptr;
 	void	*win;
+	int		**textures;
+	t_texture	texture_path;
 	t_point	screen_size;
+	t_player player;
 }				t_data;
 
 
