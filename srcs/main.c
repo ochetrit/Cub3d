@@ -45,6 +45,27 @@ t_data	*parsing(int ac, char **av)
 	return (data);
 }
 
+void	init_player_data_test(t_data *data)
+{
+	data->player.pos_x = 22;
+	data->player.pos_y = 12;
+	data->player.dir_x = -1;
+	data->player.dir_y = 0;
+	data->player.plane_x = 0;
+	data->player.plane_y = 0.66;
+}
+
+
+void	start_game(t_data *data)
+{
+	// faire une fonction pour initialiser les données du joueur avec t_Data et char direction
+	init_player_data_test(data);
+
+	// raycasting
+	// draw img
+	mlx_loop(data->mlx_ptr);
+}
+
 int main(int ac, char **av)
 {
 	t_data	*data;
@@ -62,7 +83,9 @@ int main(int ac, char **av)
 	printf("path_so: %s\n", data->path_so);
 	printf("path_we: %s\n", data->path_we);
 	printf("path_ea: %s\n", data->path_ea);
-	printf("c_color: %d,%d,%d\n", data->c_color[0], data->c_color[1], data->c_color[2]);
-	printf("f_color: %d,%d,%d\n", data->f_color[0], data->f_color[1], data->f_color[2]);
+	printf("c_color: %s,%s,%s\n", data->c_color[0], data->c_color[1], data->c_color[2]);
+	printf("f_color: %s,%s,%s\n", data->f_color[0], data->f_color[1], data->f_color[2]);
+	init_game(data);
+	start_game(data);
 	return (free_data(data), 0);
 } 

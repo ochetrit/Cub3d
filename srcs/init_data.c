@@ -12,6 +12,23 @@
 
 #include "../includes/cub3d.h"
 
+
+void	init_point(t_point *point)
+{
+	point->size_x = 0;
+	point->size_y = 0;
+}
+
+void	init_player(t_player *player)
+{
+	player->pos_x = 0;
+	player->pos_y = 0;
+	player->dir_x = 0;
+	player->dir_y = 0;
+	player->plane_x = 0;
+	player->plane_y = 0;
+}
+
 t_data	*init_data(char *file)
 {
 	t_data	*data;
@@ -36,5 +53,9 @@ t_data	*init_data(char *file)
 	data->path_ea = NULL;
 	data->c_color = NULL;
 	data->f_color = NULL;
+	data->mlx_ptr = NULL;
+	data->win = NULL;
+	init_point(&data->screen_size);
+	init_player(&data->player);
 	return (data);
 }

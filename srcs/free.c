@@ -62,10 +62,23 @@ void	free_data(t_data *data)
 	if (data->c_color)
 		free(data->c_color);
 	if (data->f_color)
-		free(data->f_color);
+    free(data->f_color);
+	if (data->texture_buffer)
+		free(data->texture_buffer);
 	if (data->map_list)
 		free_map(data->map_list);
 	if (data->map)
 		free_tab(data->map);
 	free(data);
+}
+
+void	end_game(char *msg, t_data *data, int num)
+{
+	(void)num;
+	ft_putstr_fd(msg, STDERR);
+	mlx_destroy_window(data->mlx_ptr, data->win);
+	mlx_destroy_display(data->mlx_ptr);
+	free(data->mlx_ptr);
+	free_data(data);
+	exit(num);
 }
