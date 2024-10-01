@@ -30,13 +30,13 @@
 # define ERR_SPWN "Error\nInvalid spawn\n"
 # define ERR_MAP1 "Error\nInvalid item\n"
 # define ERR_WALL "Error\nInvalid wall\n"
-# define EMPTY 0
-# define NO 1
-# define SO 2
-# define WE 3
-# define EA 4
-# define C 5
-# define F 6
+# define NO 0
+# define SO 1
+# define WE 2
+# define EA 3
+# define C 4
+# define F 5
+# define EMPTY 6
 # define ERROR 7
 # define END 8
 # define W_TITLE "Cub3D"
