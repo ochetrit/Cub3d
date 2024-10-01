@@ -6,7 +6,7 @@
 /*   By: ochetrit <ochetrit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 15:17:02 by ochetrit          #+#    #+#             */
-/*   Updated: 2024/10/01 15:55:37 by ochetrit         ###   ########.fr       */
+/*   Updated: 2024/10/01 17:39:13 by ochetrit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ int	parse_map(char **map, int height, int width)
 	y = 0;
 	if (!check_boarder(map))
 		return (false);
-	printf("boarder ok\n");
 	y = 1;
 	while (y < height - 1)
 	{

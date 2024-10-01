@@ -73,16 +73,6 @@ int main(int ac, char **av)
 	data = parsing(ac, av);
 	if (!data)
 		return (1);
-	int	i = 0;
-	while (data->map[i])
-	{
-		printf("%s\n", data->map[i]);
-		i++;
-	}
-	printf("path_no: %s\n", data->path_no);
-	printf("path_so: %s\n", data->path_so);
-	printf("path_we: %s\n", data->path_we);
-	printf("path_ea: %s\n", data->path_ea);
 	init_game(data);
 	start_game(data);
 	return (free_data(data), 0);
