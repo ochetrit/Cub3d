@@ -12,12 +12,12 @@
 
 #include "../includes/cub3d.h"
 
-void	free_tab(char **tab, int len)
+void	free_tab(char **tab)
 {
 	int	i;
 
 	i = 0;
-	while (i < len)
+	while (tab[i])
 	{
 		free(tab[i]);
 		i++;
@@ -63,7 +63,9 @@ void	free_data(t_data *data)
 		free(data->c_color);
 	if (data->f_color)
 		free(data->f_color);
-	if (data->map)
+	if (data->map_list)
 		free_map(data->map_list);
+	if (data->map)
+		free_tab(data->map);
 	free(data);
 }

@@ -6,7 +6,7 @@
 /*   By: ochetrit <ochetrit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 17:33:56 by ochetrit          #+#    #+#             */
-/*   Updated: 2024/09/30 15:54:02 by ochetrit         ###   ########.fr       */
+/*   Updated: 2024/10/01 15:54:44 by ochetrit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,38 +56,14 @@ char	*skip_empty_lines(int fd)
 	return (line);
 }
 
-int	parse_map(t_map	*lst, int height)
-{
-	t_map	*next;
-	int		i;
-
-	i = 0;
-	next = ft_maplast(lst);
-	while (lst->map[i] && (lst->map[i] == '1' || lst->map[i] == ' '))
-		i++;
-	if (lst->map[i])
-		return (ft_putstr_fd(ERR_WALL, STDERR), false);
-	i = 0;
-	while (next->map[i] && (next->map[i] == '1' || next->map[i] == ' '))
-		i++;
-	if (next->map[i])
-		return (ft_putstr_fd(ERR_WALL, STDERR), false);
-	height--;
-	return (true);
-}
-
-int	build_map(t_data *data, t_map *map)
+int	build_map(t_data *data, t_map *map, int y)
 {
 	int	x;
-	int	y;
 	
 	data->map = malloc(sizeof(char *) * (data->map_height + 1));
 	if (!data->map)
 		return (ft_putstr_fd(ERR_MALLOC, STDERR), false);
 	data->map[data->map_height] = NULL;
-	y = 0;
-	printf("map_width: %d\n", data->map_width);
-	printf("map_height: %d\n", data->map_height);
 	while (y < data->map_height)
 	{
 		data->map[y] = malloc(sizeof(char) * (data->map_width + 1));
@@ -96,10 +72,12 @@ int	build_map(t_data *data, t_map *map)
 		x = -1;
 		while (++x < data->map_width && map->map[x])
 			data->map[y][x] = map->map[x];
-		while (++x < data->map_width)
+		while (x < data->map_width)
+		{
 			data->map[y][x] = ' ';
+			x++;
+		}
 		data->map[y][x] = '\0';
-		printf("%s\n", data->map[y]);
 		map = map->next;
 		y++;
 	}

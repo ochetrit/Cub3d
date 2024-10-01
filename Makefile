@@ -11,7 +11,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-SRCS = srcs/main.c srcs/free.c srcs/init_textures.c srcs/init_colors.c srcs/init_data.c srcs/init_map.c srcs/utils_map.c
+SRCS = srcs/main.c srcs/free.c srcs/init_textures.c srcs/init_colors.c srcs/init_data.c srcs/init_map.c srcs/utils_map.c srcs/parse_map.c
 
 LIB_MLX = minilibx-linux/libmlx.a
 

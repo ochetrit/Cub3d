@@ -38,7 +38,9 @@ t_data	*parsing(int ac, char **av)
 	init_color_key(data);
 	if (!init_map(data))
 		return (free_data(data), NULL);
-	else if (!build_map(data, *data->map_list))
+	else if (!build_map(data, *data->map_list, 0))
+		return (free_data(data), NULL);
+	else if (!parse_map(data->map, data->map_height, data->map_width))
 		return (free_data(data), NULL);
 	return (data);
 }
