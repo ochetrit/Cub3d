@@ -83,8 +83,6 @@ int main(int ac, char **av)
 	printf("path_so: %s\n", data->path_so);
 	printf("path_we: %s\n", data->path_we);
 	printf("path_ea: %s\n", data->path_ea);
-	printf("c_color: %s,%s,%s\n", data->c_color[0], data->c_color[1], data->c_color[2]);
-	printf("f_color: %s,%s,%s\n", data->f_color[0], data->f_color[1], data->f_color[2]);
 	init_game(data);
 	start_game(data);
 	return (free_data(data), 0);
