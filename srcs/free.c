@@ -45,6 +45,8 @@ void	free_data(t_data *data)
 		free_tab(data->c_color, 3);
 	if (data->f_color)
 		free_tab(data->f_color, 3);
+	if (data->texture_buffer)
+		free(data->texture_buffer);
 	free(data);
 }
 

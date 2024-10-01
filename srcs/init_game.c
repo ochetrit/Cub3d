@@ -66,7 +66,8 @@ int	*xpm_to_img(t_data *data, char *path)
 	int	*buf;
 	int	size[2];
 	
-	buf = 
+	size[0] = 0;
+	size[1] = 0;
 	buf = mlx_xpm_file_to_image(data->mlx_ptr, path, &size[0], &size[1]);
 	if (!buf)
 		end_game(ERR_MLX, data, 2);
@@ -75,20 +76,41 @@ int	*xpm_to_img(t_data *data, char *path)
 
 void	load_textures(t_data *data)
 {
+	int i;
 	data->texture_buffer = ft_calloc(4, sizeof * data->texture_buffer);
 	if (!data->texture_buffer)
 		end_game(ERR_MALLOC, data, 2);
+	i = 0;
+	// while (i < 4)
+	// {
+	// 	data->texture_buffer[i] = ft_calloc(1, sizeof * data->texture_buffer[i]);
+	// 	if (!data->texture_buffer[i])
+	// 		end_game(ERR_MALLOC, data, 2);
+	// 	i++;
+	// }
 	data->texture_buffer[NO] = xpm_to_img(data, data->path_no);
 	data->texture_buffer[SO] = xpm_to_img(data, data->path_so);
 	data->texture_buffer[EA] = xpm_to_img(data, data->path_ea);
 	data->texture_buffer[WE] = xpm_to_img(data, data->path_we);
 }
 
+void	test_display_test(t_data *data)
+{
+	if (data->texture_buffer[NO])
+	{
+		mlx_put_image_to_window(data->mlx_ptr, data->win, data->texture_buffer[NO], 0, 0);
+	}
+	else
+	{
+		printf("NO texture not loaded\n");
+	}
+}
 
 void	init_game(t_data *data)
 {
 	init_window(data);
 	load_textures(data);
+	test_display_test(data);
 	// set_up_sprites(data);
 	// set_up_player(data);
 	mlx_hook(data->win, DESTROY_NOTIF, NO_EVENT_MASK, red_cross, data);
