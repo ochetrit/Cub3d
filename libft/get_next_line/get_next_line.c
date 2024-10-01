@@ -6,19 +6,25 @@
 /*   By: ochetrit <ochetrit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 11:29:13 by ochetrit          #+#    #+#             */
-/*   Updated: 2024/03/11 03:43:50 by ochetrit         ###   ########.fr       */
+/*   Updated: 2024/09/27 15:45:20 by ochetrit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*get_next_line(int fd)
+char	*get_next_line(int fd, int prout)
 {
 	static char	*temp;
 	char		*str;
 	int			size;
 	int			i;
 
+	if (prout)
+	{
+		free(temp);
+		temp = NULL;
+		return (NULL);
+	}
 	if (ft_strchr2(temp, '\n') == -1)
 		temp = ft_initialise(temp, fd);
 	if (!temp)

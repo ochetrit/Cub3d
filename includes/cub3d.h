@@ -26,6 +26,10 @@
 # define ERR_CHAR "Error\nI need an invalid char\n"
 # define ERR_COLOR "Error\nInvalid color\n"
 # define ERR_MLX "Error\nMlx failed\n"
+# define ERR_COLOR2 "Error\nInvalid comas in color\n"
+# define ERR_SPWN "Error\nInvalid spawn\n"
+# define ERR_MAP1 "Error\nInvalid item\n"
+# define ERR_WALL "Error\nInvalid wall\n"
 # define EMPTY 0
 # define NO 1
 # define SO 2
@@ -75,31 +79,41 @@ typedef struct s_player
 	double plane_y;
 }				t_player;
 
+typedef	struct s_map
+{
+	char	*map;
+	int		x_start;
+	int		y_current;
+	struct	s_map	*next;
+}				t_map;
+
+
 typedef struct	s_data
 {
 	int	fd;
 	char	*line;
+	t_map	**map_list;
 	char	**map;
 	int		map_height;
 	int		map_width;
+	int		map_start;
 	char	*path_no;
 	char	*path_so;
 	char	*path_we;
 	char	*path_ea;
-	char	**c_color;
-	char	**f_color;
 	void	*mlx_ptr;
 	void	*win;
 	int		**texture_buffer;
 	t_point	screen_size;
 	t_player	player;
+	unsigned char	*c_color;
+	unsigned int		c_color_key;
+	unsigned char	*f_color;
+	unsigned int		f_color_key;
 }				t_data;
 
 
 //// 1. Check that the file respects the rules ////
-t_data	*init_data(char *file);
-int	find_path_and_color(t_data *data);
-char	**build_color(char *line);
 
 // FREE
 void	free_data(t_data *data);
@@ -108,3 +122,13 @@ void	end_game(char *msg, t_data *data, int num);
 
 // INIT GAME
 void	init_game(t_data *data);
+t_data			*init_data(char *file);
+int				find_path_and_color(t_data *data);
+int				init_map(t_data *data);
+int				build_map(t_data *data, t_map *map, int y);
+int				parse_map(char **map, int height, int width);
+unsigned char	*build_color(char *line, int *key);
+void			init_color_key(t_data *data);
+void			ft_mapadd_back(t_data *data, t_map **head, t_map *new);
+t_map			*ft_mapnew(char *content, int map_height);
+t_map			*ft_maplast(t_map *lst);

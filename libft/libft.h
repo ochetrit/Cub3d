@@ -6,7 +6,7 @@
 /*   By: ochetrit <ochetrit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 14:36:12 by ftilliet          #+#    #+#             */
-/*   Updated: 2024/07/03 14:36:16 by ochetrit         ###   ########.fr       */
+/*   Updated: 2024/09/27 15:47:24 by ochetrit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include "get_next_line/get_next_line.h"
-# include "get_next_line/get_next_line_bonus.h"
 # include "printf/ft_printf.h"
 
 typedef struct s_list

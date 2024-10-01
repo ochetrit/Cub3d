@@ -6,7 +6,7 @@
 /*   By: ochetrit <ochetrit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 09:21:20 by ochetrit          #+#    #+#             */
-/*   Updated: 2024/09/25 19:46:34 by ochetrit         ###   ########.fr       */
+/*   Updated: 2024/09/27 17:14:42 by ochetrit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,35 +82,43 @@ int	check_comas(char *line, int comas[2])
 			line++;
 		}
 		if ((comas[0] != 1 && comas[1] < 3) || (comas[0] != 0 && comas[1] == 3))
-			return (printf("TEST\n"), false);
+			return (false);
 	}
 	return (true);
 }
 
-char	**build_color(char *line)
+unsigned char	*build_color(char *line, int *key)
 {
-	char	**color;
+	unsigned char	*color;
 	int		comas[2];
 	int	i;
 
 	comas[0] = 0;
 	comas[1] = 0;
 	if (!check_color(line))
-		return (NULL);
+		return (*key = ERROR, NULL);
 	if (!check_comas(line, comas))
-		return (printf("oeoeoeoe\n"), NULL);
-	color = ft_calloc(sizeof(char *), 3);
+		return (*key = ERROR, ft_putstr_fd(ERR_COLOR2, STDERR), NULL);
+	color = ft_calloc(sizeof(char), 3);
 	if (!color)
-		return (ft_putstr_fd(ERR_MALLOC, STDERR), NULL);
+		return (ft_putstr_fd(ERR_MALLOC, STDERR), *key = ERROR, NULL);
 	i = 0;
 	while (*line && i < 3)
 	{
 		while (!ft_isdigit(*line))
 			line++;
-		color[i] = ft_itoa(ft_atoi(line));
+		color[i] = ft_atoi(line);
 		while (ft_isdigit(*line))
 			line++;
 		i++;
 	}
 	return (color);
+}
+
+void	init_color_key(t_data *data)
+{
+	data->c_color_key = data->c_color[0] << 16 |
+	data->c_color[1] << 8 | data->c_color[2];
+	data->f_color_key = data->f_color[0] << 16 |
+	data->f_color[1] << 8 | data->f_color[2];
 }

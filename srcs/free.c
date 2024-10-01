@@ -12,12 +12,12 @@
 
 #include "../includes/cub3d.h"
 
-void	free_tab(char **tab, int len)
+void	free_tab(char **tab)
 {
 	int	i;
 
 	i = 0;
-	while (i < len)
+	while (tab[i])
 	{
 		free(tab[i]);
 		i++;
@@ -25,14 +25,32 @@ void	free_tab(char **tab, int len)
 	free(tab);
 }
 
+void	free_map(t_map **map)
+{
+	t_map	*current;
+	t_map	*next;
+
+	current = *map;
+	while (current)
+	{
+		if (current->map)
+			free(current->map);
+		if (!current->next)
+		{
+			free(current);
+			break ;
+		}
+		next = current->next;
+		free(current);
+		current = next;
+	}
+	free(map);
+}
+
 void	free_data(t_data *data)
 {
 	if (data->fd > 0)
 		close(data->fd);
-	if (data->line)
-		free(data->line);
-	if (data->map)
-		free(data->map);
 	if (data->path_no)
 		free(data->path_no);
 	if (data->path_so)
@@ -42,11 +60,15 @@ void	free_data(t_data *data)
 	if (data->path_ea)
 		free(data->path_ea);
 	if (data->c_color)
-		free_tab(data->c_color, 3);
+		free(data->c_color);
 	if (data->f_color)
-		free_tab(data->f_color, 3);
+    free(data->f_color);
 	if (data->texture_buffer)
 		free(data->texture_buffer);
+	if (data->map_list)
+		free_map(data->map_list);
+	if (data->map)
+		free_tab(data->map);
 	free(data);
 }
 
