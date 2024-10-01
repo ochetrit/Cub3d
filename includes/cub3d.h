@@ -30,6 +30,7 @@
 # define ERR_SPWN "Error\nInvalid spawn\n"
 # define ERR_MAP1 "Error\nInvalid item\n"
 # define ERR_WALL "Error\nInvalid wall\n"
+# define TEXT_LOAD_FAILED "Error\nTexture loading failed\n"
 # define NO 0
 # define SO 1
 # define WE 2
