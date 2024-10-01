@@ -38,10 +38,10 @@
 # define W_TITLE "Cub3D"
 # define W_WIDTH 640
 # define W_HEIGHT 480
-# define NORTH 0
-# define SOUTH 1
-# define WEST 2
-# define EAST 3
+// # define NORTH 0
+// # define SOUTH 1
+// # define WEST 2
+// # define EAST 3
 
 /*key*/
 # define DESTROY_NOTIF 17
@@ -56,14 +56,14 @@ typedef struct	s_point
 	int	size_y;
 }				t_point;
 
-typedef struct texture
+typedef struct img
 {
-	char *north;
-	char *south;
-	char *west;
-	char *east;
-}				t_texture;
-
+	void	*img;
+	char	*addr; // adresse pixels de l img
+	int		bbp; // bits per pixel
+	int		line_length; // longueur de ligne en octets
+	int		endian; // Endianness de l'image (0 pour big endian, 1 pour little endian)
+}				t_img;
 
 typedef struct s_player
 {
@@ -90,10 +90,9 @@ typedef struct	s_data
 	char	**f_color;
 	void	*mlx_ptr;
 	void	*win;
-	int		**textures;
-	t_texture	texture_path;
+	int		**texture_buffer;
 	t_point	screen_size;
-	t_player player;
+	t_player	player;
 }				t_data;
 
 
@@ -107,5 +106,5 @@ void	free_data(t_data *data);
 void	end_game(char *msg, t_data *data, int num);
 
 
-// INIT MLX
-void	init_mlx_data(t_data *data);
+// INIT GAME
+void	init_game(t_data *data);

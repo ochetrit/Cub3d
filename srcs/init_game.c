@@ -46,16 +46,42 @@ int	red_cross(t_data *data)
 	return (0);
 }
 
+// t_img xpm_to_img(t_data *data, char *path)
+// {
+// 	t_img img;
+// 	int	size[2];
+
+// 	img.img = mlx_xpm_file_to_image(data->mlx_ptr, path, &size[0], &size[1]);
+// 	if (!img.img)
+// 		end_game(ERR_MLX, data, 2);
+// 	img.addr = mlx_get_data_addr(img.img, &img.bbp, &img.line_length, &img.endian);
+// 	if (!img.addr)
+// 		end_game(ERR_MLX, data, 2);
+// 	return (img);
+// }
+
+
+int	*xpm_to_img(t_data *data, char *path)
+{
+	int	*buf;
+	int	size[2];
+	
+	buf = 
+	buf = mlx_xpm_file_to_image(data->mlx_ptr, path, &size[0], &size[1]);
+	if (!buf)
+		end_game(ERR_MLX, data, 2);
+	return (buf);
+}
 
 void	load_textures(t_data *data)
 {
-	data->textures = malloc(sizeof(t_texture));
-	if (!data->textures)
+	data->texture_buffer = ft_calloc(4, sizeof * data->texture_buffer);
+	if (!data->texture_buffer)
 		end_game(ERR_MALLOC, data, 2);
-	data->textures[WEST] = xpm_to_img(data, data->texture_path.west);
-	data->textures[EAST] = xpm_to_img(data, data->texture_path.east);
-	data->textures[NORTH] = xpm_to_img(data, data->texture_path.north);
-	data->textures[SOUTH] = xpm_to_img(data, data->texture_path.south);
+	data->texture_buffer[NO] = xpm_to_img(data, data->path_no);
+	data->texture_buffer[SO] = xpm_to_img(data, data->path_so);
+	data->texture_buffer[EA] = xpm_to_img(data, data->path_ea);
+	data->texture_buffer[WE] = xpm_to_img(data, data->path_we);
 }
 
 
