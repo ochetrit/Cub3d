@@ -70,7 +70,7 @@ int	*xpm_to_img(t_data *data, char *path)
 	size[1] = 0;
 	buf = mlx_xpm_file_to_image(data->mlx_ptr, path, &size[0], &size[1]);
 	if (!buf)
-		end_game(ERR_MLX, data, 2);
+		end_game(TEXT_LOAD_FAILED, data, 2);
 	return (buf);
 }
 
