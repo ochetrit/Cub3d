@@ -93,6 +93,7 @@ typedef struct	s_data
 {
 	int	fd;
 	char	*line;
+	char	first_dir;
 	t_map	**map_list;
 	char	**map;
 	int		map_height;

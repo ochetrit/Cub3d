@@ -55,11 +55,43 @@ void	init_player_data_test(t_data *data)
 	data->player.plane_y = 0.66;
 }
 
+void	which_direction(t_data *data, int dir_x,
+	int dir_y, int plane_x, int plane_y)
+{
+	data->player.dir_x = dir_x;
+	data->player.dir_y = dir_y;
+	data->player.plane_x = plane_x;
+	data->player.plane_y = plane_y;
+}
+
+void init_player_data(t_data *data)
+{
+	if (data->first_dir == 'N')
+	{
+		data->player.dir_x = -1;
+		data->player.plane_y = 0.66;
+	}
+	else if (data->first_dir == 'S')
+	{
+		data->player.dir_x = 1;
+		data->player.plane_y = -0.66;
+	}
+	else if (data->first_dir == 'W')
+	{
+		data->player.dir_y = -1;
+		data->player.plane_x = -0.66;
+	}
+	else if (data->first_dir == 'E')
+	{
+		data->player.dir_y = 1;
+		data->player.plane_x = 0.66;
+	}
+}
+
 
 void	start_game(t_data *data)
 {
-	// faire une fonction pour initialiser les données du joueur avec t_Data et char direction
-	init_player_data_test(data);
+	init_player_data(data);
 
 	// raycasting
 	// draw img
