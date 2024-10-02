@@ -3,14 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   init_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ochetrit <ochetrit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nclassea <nclassea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 17:33:56 by ochetrit          #+#    #+#             */
-/*   Updated: 2024/10/02 16:25:32 by ochetrit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
+
+void	which_first_dir(t_data *data, char dir)
+{
+	if (dir == 'N')
+		data->first_direction = 'N';
+	else if (dir == 'S')
+		data->first_direction = 'S';
+	else if (dir == 'W')
+		data->first_direction = 'W';
+	else if (dir == 'E')
+		data->first_direction = 'E';
+}
 
 int	check_map_line(char *line, t_data *data)
 {
@@ -22,6 +33,7 @@ int	check_map_line(char *line, t_data *data)
 			line++;
 		if ((*line == 'N' || *line == 'S' || *line == 'W' || *line == 'E') && data->map_start == 0)
 		{
+			which_first_dir(data, *line);
 			data->map_start++;
 			line++;
 		}
