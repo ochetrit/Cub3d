@@ -112,7 +112,7 @@ void	init_game(t_data *data)
 	load_textures(data);
 	test_display_test(data);
 	// set_up_sprites(data);
-	// set_up_player(data);
+	set_up_player(data);
 	mlx_hook(data->win, DESTROY_NOTIF, NO_EVENT_MASK, red_cross, data);
 	mlx_loop(data->mlx_ptr);
 	// init_img(data);
