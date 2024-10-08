@@ -31,6 +31,7 @@
 # define ERR_MAP1 "Error\nInvalid item\n"
 # define ERR_WALL "Error\nInvalid wall\n"
 # define TEXT_LOAD_FAILED "Error\nTexture loading failed\n"
+# define ERR_MLX_NEW_IMG "Error\nMlx new image failed\n"
 # define NO 0
 # define SO 1
 # define WE 2
@@ -64,10 +65,10 @@ typedef struct	s_point
 typedef struct img
 {
 	void	*img;
-	char	*addr; // adresse pixels de l img
-	int		bbp; // bits per pixel
-	int		line_length; // longueur de ligne en octets
-	int		endian; // Endianness de l'image (0 pour big endian, 1 pour little endian)
+	int		*addr;
+	int		bbp;
+	int		line_length;
+	int		endian;
 }				t_img;
 
 typedef struct s_player
@@ -79,6 +80,29 @@ typedef struct s_player
 	double plane_x;
 	double plane_y;
 }				t_player;
+
+typedef struct	s_ray
+{
+	int		x;
+	double camera_x;
+	double dir_x;
+	double dir_y;
+	int map_x;
+	int map_y;
+	int step_x;
+	int step_y;
+	double sidedist_x;
+	double sidedist_y;
+	double deltadist_x;
+	double deltadist_y;
+	double wall_dist;
+	double wall_x;
+	// int side;
+	// int line_height;
+	// int draw_start;
+	// int draw_end;
+}	t_ray;
+
 
 typedef	struct s_map
 {

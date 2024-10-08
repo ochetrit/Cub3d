@@ -45,56 +45,81 @@ t_data	*parsing(int ac, char **av)
 	return (data);
 }
 
-void	init_player_data_test(t_data *data)
-{
-	data->player.pos_x = 22;
-	data->player.pos_y = 12;
-	data->player.dir_x = -1;
-	data->player.dir_y = 0;
-	data->player.plane_x = 0;
-	data->player.plane_y = 0.66;
-}
-
-void	which_direction(t_data *data, int dir_x,
-	int dir_y, int plane_x, int plane_y)
-{
-	data->player.dir_x = dir_x;
-	data->player.dir_y = dir_y;
-	data->player.plane_x = plane_x;
-	data->player.plane_y = plane_y;
-}
-
-void init_player_data(t_data *data)
+void setup_player(t_data *data)
 {
 	if (data->first_dir == 'N')
 	{
-		data->player.dir_x = -1;
-		data->player.plane_y = 0.66;
+		data->player.dir_y = -1;
+		data->player.plane_x = 0.66;
 	}
 	else if (data->first_dir == 'S')
 	{
-		data->player.dir_x = 1;
-		data->player.plane_y = -0.66;
+		data->player.dir_y = 1;
+		data->player.plane_x = -0.66;
 	}
 	else if (data->first_dir == 'W')
 	{
-		data->player.dir_y = -1;
-		data->player.plane_x = -0.66;
+		data->player.dir_x = -1;
+		data->player.plane_y = -0.66;
 	}
 	else if (data->first_dir == 'E')
 	{
-		data->player.dir_y = 1;
-		data->player.plane_x = 0.66;
+		data->player.dir_x = 1;
+		data->player.plane_y = 0.66;
+	}
+}
+
+void	init_ray(t_ray *ray)
+{
+	ray->camera_x = 0;
+	ray->map_x = 0;
+	ray->map_y = 0;
+	ray->dir_x = 0;
+	ray->dir_y = 0;
+	ray->step_x = 0;
+	ray->step_y = 0;
+	ray->sidedist_x = 0;
+	ray->sidedist_y = 0;
+	ray->deltadist_x = 0;
+	ray->deltadist_y = 0;
+	ray->wall_dist = 0;
+	ray->wall_x = 0;
+}
+
+void	calc_ray_direction(t_ray *ray, t_player *player)
+{
+	ray->camera_x = 2 * ray->x / (double)W_WIDTH - 1;
+	ray->dir_x = player->dir_x + player->plane_x * ray->camera_x;
+	ray->dir_y = player->dir_y + player->plane_y * ray->camera_x;
+}
+
+void	raycasting(t_data *data)
+{
+	t_ray *ray;
+
+	int	x;
+	x = 0;
+	ray = malloc(sizeof(t_ray));
+	init_ray(ray);
+	while (ray->x < W_WIDTH)
+	{
+		ray->x = 0;
+		calc_ray_direction(ray, &data->player);
+		// init_dda_steps(data);
+		// run_dda(data);
+		// calc_line_height(data);
+		// drat_text_column(data);
+		ray->x++;
 	}
 }
 
 
 void	start_game(t_data *data)
 {
-	init_player_data(data);
-
+	setup_player(data);
 	// raycasting
 	// draw img
+	// add hooks
 	mlx_loop(data->mlx_ptr);
 }
 
@@ -108,4 +133,4 @@ int main(int ac, char **av)
 	init_game(data);
 	start_game(data);
 	return (free_data(data), 0);
-} 
+}
