@@ -93,26 +93,59 @@ void	calc_ray_direction(t_ray *ray, t_player *player)
 	ray->dir_y = player->dir_y + player->plane_y * ray->camera_x;
 }
 
+void	init_dda_steps(t_data *data, t_ray *ray)
+{
+	ray->map_x = (int)data->player.pos_x;
+	ray->map_y = (int)data->player.pos_y;
+	ray->deltadist_x = fabs(1 / ray->dir_x);
+	ray->deltadist_y = fabs(1 / ray->dir_y);
+}
+
+
+
+// void	run_dda(t_data *data, t_ray *ray)
+// {
+// 	if (ray->dir_x < 0)
+// 	{
+// 		ray->step_x = -1;
+// 		ray->sidedist_x = (data->player.pos_x - ray->map_x) * ray->deltadist_x;
+// 	}
+// 	else
+// 	{
+// 		ray->step_x = 1;
+// 		ray->sidedist_x = (ray->map_x + 1.0 - data->player.pos_x) * ray->deltadist_x;
+// 	}
+// 	if (ray->dir_y < 0)
+// 	{
+// 		ray->step_y = -1;
+// 		ray->sidedist_y = (data->player.pos_y - ray->map_y) * ray->deltadist_y;
+// 	}
+// 	else
+// 	{
+// 		ray->step_y = 1;
+// 		ray->sidedist_y = (ray->map_y + 1.0 - data->player.pos_y) * ray->deltadist_y;
+// 	}
+// }
+
 void	raycasting(t_data *data)
 {
 	t_ray *ray;
 
 	int	x;
-	x = 0;
+
 	ray = malloc(sizeof(t_ray));
 	init_ray(ray);
+	ray->x = 0;
 	while (ray->x < W_WIDTH)
 	{
-		ray->x = 0;
 		calc_ray_direction(ray, &data->player);
-		// init_dda_steps(data);
-		// run_dda(data);
+		init_dda_steps(data, ray);
+		run_dda(data, ray);
 		// calc_line_height(data);
 		// drat_text_column(data);
 		ray->x++;
 	}
 }
-
 
 void	start_game(t_data *data)
 {

@@ -16,6 +16,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <stdbool.h>
+#include <math.h>
 #include "../libft/libft.h"
 # include "../minilibx-linux/mlx.h"
 
