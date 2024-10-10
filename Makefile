@@ -25,7 +25,7 @@ CC = cc
 
 RM = rm -rf
 
-FLAGS = -Wall -Wextra -Werror -g3 -O3
+FLAGS = -Wall -Wextra -Werror -g3
 
 LDFLAGS = -L./libft -lft
 

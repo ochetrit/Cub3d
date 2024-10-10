@@ -101,11 +101,30 @@ void	init_textures(t_data *data)
 	printf(" pix = %x\n", data->texture_buffer[SO][0]);
 }
 
+void init_frame_buffer(t_data *data)
+{
+	int i;
+
+	i = 0;
+	data->frame_buffer = malloc(sizeof(int *) * W_HEIGHT);
+	if (!data->frame_buffer)
+		end_game(ERR_MALLOC, data, 2);
+
+	while (i < W_HEIGHT)
+	{
+		data->frame_buffer[i] = malloc(sizeof(int) * W_WIDTH);
+		if (!data->frame_buffer[i])
+			end_game(ERR_MALLOC, data, 2);
+		i++;
+	}
+}
+
 
 void	init_game(t_data *data)
 {
 	init_window(data);
 	init_textures(data);
+	init_frame_buffer(data);
 	mlx_hook(data->win, DESTROY_NOTIF, NO_EVENT_MASK, red_cross, data);
 	
 }

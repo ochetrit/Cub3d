@@ -45,6 +45,7 @@
 # define W_TITLE "Cub3D"
 # define W_WIDTH 640
 # define W_HEIGHT 480
+# define TEXT_SIZE 64
 // # define NORTH 0
 // # define SOUTH 1
 // # define WEST 2
@@ -82,6 +83,13 @@ typedef struct s_player
 	double plane_y;
 }				t_player;
 
+typedef struct s_text
+{
+	int		text_index;
+	int		text_x;
+	int		text_width;
+}				t_text;
+
 typedef struct	s_ray
 {
 	int		x;
@@ -98,10 +106,10 @@ typedef struct	s_ray
 	double deltadist_y;
 	double wall_dist;
 	double wall_x;
-	// int side;
-	// int line_height;
-	// int draw_start;
-	// int draw_end;
+	int side;
+	int line_height;
+	int draw_start;
+	int draw_end;
 }	t_ray;
 
 
@@ -131,8 +139,11 @@ typedef struct	s_data
 	void	*mlx_ptr;
 	void	*win;
 	int		**texture_buffer;
+	int		**frame_buffer;
 	t_point	screen_size;
 	t_player	player;
+	t_text		text;
+	t_img		img;
 	unsigned char	*c_color;
 	unsigned int		c_color_key;
 	unsigned char	*f_color;
