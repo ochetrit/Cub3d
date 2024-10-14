@@ -87,12 +87,12 @@ typedef struct s_text
 {
 	int		text_index;
 	int		text_x;
+	int		text_y;
 	int		text_width;
 }				t_text;
 
 typedef struct	s_ray
 {
-	int		x;
 	double camera_x;
 	double dir_x;
 	double dir_y;
@@ -141,6 +141,7 @@ typedef struct	s_data
 	int		**texture_buffer;
 	int		**frame_buffer;
 	t_point	screen_size;
+	t_ray	ray;
 	t_player	player;
 	t_text		text;
 	t_img		img;

@@ -59,7 +59,11 @@ void set_img(t_data *data, t_img *img, char *path)
 	img->img = mlx_xpm_file_to_image(data->mlx_ptr, path, &size_img, &size_img);
 	if (!img->img)
 		end_game(TEXT_LOAD_FAILED, data, 2);
+	if (!img->img)
+		end_game(TEXT_LOAD_FAILED, data, 2);
 	img->addr = (int *)mlx_get_data_addr(img->img, &img->bbp, &img->line_length, &img->endian);
+	if (!img->addr)
+		end_game(TEXT_LOAD_FAILED, data, 2);
 	return ;
 }
 
