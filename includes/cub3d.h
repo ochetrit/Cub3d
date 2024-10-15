@@ -46,6 +46,9 @@
 # define W_WIDTH 640
 # define W_HEIGHT 480
 # define TEXT_SIZE 64
+# define MINIMAP_SCALE 0.1
+# define RED 0
+# define GREEN 1
 // # define NORTH 0
 // # define SOUTH 1
 // # define WEST 2
@@ -140,6 +143,7 @@ typedef struct	s_data
 	void	*win;
 	int		**texture_buffer;
 	int		**frame_buffer;
+	int		**color_buffer;
 	t_point	screen_size;
 	t_ray	ray;
 	t_player	player;
@@ -171,3 +175,8 @@ void			init_color_key(t_data *data);
 void			ft_mapadd_back(t_data *data, t_map **head, t_map *new);
 t_map			*ft_mapnew(char *content, int map_height);
 t_map			*ft_maplast(t_map *lst);
+
+
+// 
+void	draw_frame_to_img(t_data *data, t_img *img);
+void set_pixel(t_data *data, t_img *img, int x, int y);

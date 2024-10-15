@@ -105,6 +105,27 @@ void	init_textures(t_data *data)
 	printf(" pix = %x\n", data->texture_buffer[SO][0]);
 }
 
+void init_color_buffer(t_data *data)
+{
+	int i;
+
+	i = 0;
+	data->color_buffer = malloc(sizeof(int *) * W_HEIGHT);
+	if (!data->color_buffer)
+		end_game(ERR_MALLOC, data, 2);
+
+	while (i < W_HEIGHT)
+	{
+		data->color_buffer[i] = malloc(sizeof(int) * W_WIDTH);
+		if (!data->color_buffer[i])
+			end_game(ERR_MALLOC, data, 2);
+		// Initialiser à 0 pour indiquer qu'aucune ligne n'a été dessinée.
+		memset(data->color_buffer[i], 0, sizeof(int) * W_WIDTH);
+		i++;
+	}
+}
+
+
 void init_frame_buffer(t_data *data)
 {
 	int i;
@@ -128,6 +149,7 @@ void	init_game(t_data *data)
 {
 	init_window(data);
 	init_textures(data);
+	init_color_buffer(data);
 	init_frame_buffer(data);
 	mlx_hook(data->win, DESTROY_NOTIF, NO_EVENT_MASK, red_cross, data);
 	

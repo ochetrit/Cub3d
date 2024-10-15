@@ -24,6 +24,47 @@ int	form_arg(char *arg)
 	return (true);
 }
 
+int is_player(char c)
+{
+	if (c == 'N' || c == 'S' || c == 'W' || c == 'E')
+		return (1);
+	return (0);
+}
+
+void find_player_pos(t_data *data, t_player *player)
+{
+	int x;
+	int y;
+	int n;
+
+	y = 0;
+	n = 0;
+	printf(" here\n");
+	if (!data->map)
+		printf("OH TA MERE\n");
+	while (data->map[y])
+	{
+		x = 0;
+		while (data->map[y][x])
+		{
+			printf("%c", data->map[y][x]);
+			if (is_player(data->map[y][x]))
+			{
+				player->pos_x = x;// + 0.5
+				player->pos_y = y;// + 0.5
+				n++;
+			}
+			if (n > 1)
+			{
+				printf("TOO MANY PLAYERS\n");
+				end_game(ERR_SPWN, data, 2);
+			}
+			x++;
+		}
+		y++;
+	}
+}
+
 t_data	*parsing(int ac, char **av)
 {
 	t_data	*data;
@@ -42,32 +83,56 @@ t_data	*parsing(int ac, char **av)
 		return (free_data(data), NULL);
 	else if (!parse_map(data->map, data->map_height, data->map_width))
 		return (free_data(data), NULL);
+	find_player_pos(data, &data->player);
 	return (data);
+}
+
+void	setup_player2(t_data *data)
+{
+	if (data->first_dir == 'W')
+	{
+		data->player.dir_x = -1;
+		data->player.dir_y = 0;
+		data->player.plane_x = 0;
+		data->player.plane_y = -0.66;
+	}
+	else if (data->first_dir == 'E')
+	{
+		data->player.dir_x = 1;
+		data->player.dir_y = 0;
+		data->player.plane_x = 0;
+		data->player.plane_y = 0.66;
+	}
+	else
+		return ;
 }
 
 void setup_player(t_data *data)
 {
 	if (data->first_dir == 'N')
 	{
+		data->player.dir_x = 0;
 		data->player.dir_y = -1;
 		data->player.plane_x = 0.66;
+		data->player.plane_y = 0;
 	}
 	else if (data->first_dir == 'S')
 	{
+		data->player.dir_x = 0;
 		data->player.dir_y = 1;
 		data->player.plane_x = -0.66;
+		data->player.plane_y = 0;
 	}
-	else if (data->first_dir == 'W')
-	{
-		data->player.dir_x = -1;
-		data->player.plane_y = -0.66;
-	}
-	else if (data->first_dir == 'E')
-	{
-		data->player.dir_x = 1;
-		data->player.plane_y = 0.66;
-	}
+	else
+		return ;
 }
+
+void	init_player_pos(t_data *data)
+{
+	setup_player(data);
+	setup_player2(data);
+}
+
 
 void	init_ray(t_ray *ray)
 {
@@ -90,20 +155,24 @@ void	init_ray(t_ray *ray)
 	ray->side = 0;
 }
 
-void	calc_ray_direction(t_ray *ray, t_player *player, int x)
+void	calc_ray_direction(t_data *data, t_ray *ray, t_player *player, int x)
 {
 	ray->camera_x = 2 * x / (double)W_WIDTH - 1;
 	ray->dir_x = player->dir_x + player->plane_x * ray->camera_x;
 	ray->dir_y = player->dir_y + player->plane_y * ray->camera_x;
-}
-
-void	init_dda_steps(t_data *data, t_ray *ray)
-{
 	ray->map_x = (int)data->player.pos_x;
 	ray->map_y = (int)data->player.pos_y;
 	ray->deltadist_x = fabs(1 / ray->dir_x);
 	ray->deltadist_y = fabs(1 / ray->dir_y);
 }
+
+// void	init_dda_steps(t_data *data, t_ray *ray)
+// {
+// 	ray->map_x = (int)data->player.pos_x;
+// 	ray->map_y = (int)data->player.pos_y;
+// 	ray->deltadist_x = fabs(1 / ray->dir_x);
+// 	ray->deltadist_y = fabs(1 / ray->dir_y);
+// }
 
 
 
@@ -131,6 +200,22 @@ void	set_dda(t_data *data, t_ray *ray)
 	}
 }
 
+int	outside_map(t_data *data, int x, int y)
+{
+	if (x < 0.25 || y < 0.25 || x > data->map_width - 1.25 || y > data->map_height - 1.25)
+		return (1);
+	return (0);
+}
+
+void draw_line(t_data *data, t_ray *ray, int x, int y, int side)
+{
+	(void)ray;
+	if (side == 0)
+		data->color_buffer[y][x] = 0xFF0000;
+	else
+		data->color_buffer[y][x] = 0x00FF00; 
+}
+
 
 void	trace_ray_path(t_data *data, t_ray *ray)
 {
@@ -145,6 +230,7 @@ void	trace_ray_path(t_data *data, t_ray *ray)
 			ray->sidedist_x += ray->deltadist_x;
 			ray->map_x += ray->step_x;
 			ray->side = 0;
+			// sidedist devient 0 ici;
 		}
 		else
 		{
@@ -152,12 +238,11 @@ void	trace_ray_path(t_data *data, t_ray *ray)
 			ray->map_y += ray->step_y;
 			ray->side = 1;
 		}
-		if (ray->map_y < 0.1 || ray->map_x < 0.1 || ray->map_y > W_HEIGHT - 0.1 || ray->map_x > W_WIDTH - 0.1)
-			break;
-		else if (data->map[ray->map_y][ray->map_x] > 0)
+		if (outside_map(data, ray->map_x, ray->map_y))
+			break ;
+		else if (data->map[ray->map_y][ray->map_x] == '1')
 			hit = 1;
-		if (data->map[ray->map_y][ray->map_x] == '1')
-			hit = 1;
+		draw_line(data, ray, ray->map_x, ray->map_y, ray->side);
 	}
 }
 	// if (ray->map_x < 0 || ray->map_x >= data->map_width || ray->map_y < 0 || ray->map_y >= data->map_height)
@@ -174,11 +259,11 @@ void	calc_wall_height(t_data *data, t_ray *ray)
 		ray->wall_dist = (ray->sidedist_y - ray->deltadist_y);
 	ray->line_height = (int)(W_HEIGHT / ray->wall_dist);
 	ray->draw_start = -(ray->line_height) / 2 + W_HEIGHT / 2;
-	printf("ray->draw_start = %d\n", ray->draw_start);
+	// printf("ray->draw_start = %d\n", ray->draw_start);
 	if (ray->draw_start < 0)
 		ray->draw_start = 0;
 	ray->draw_end = ray->line_height / 2 + W_HEIGHT / 2;
-	printf("ray->draw_end = %d\n", ray->draw_end);
+	// printf("ray->draw_end = %d\n", ray->draw_end);
 	if (ray->draw_end >= W_HEIGHT)
 		ray->draw_end = W_HEIGHT - 1;
 	if (ray->side == 0)
@@ -279,69 +364,25 @@ void	raycasting(t_data *data)
 	while (x < W_WIDTH)
 	{
 		init_ray(&data->ray);
-		calc_ray_direction(&data->ray, &data->player, x);
-		init_dda_steps(data, &data->ray);
+		calc_ray_direction(data, &data->ray, &data->player, x);
+		// init_dda_steps(data, &data->ray);
 		set_dda(data, &data->ray);
 		trace_ray_path(data, &data->ray);
+		draw_frame_to_img(data, &data->img);
 		calc_wall_height(data, &data->ray);
-		draw_text_column(data, &data->ray, &data->text, x);
+		// draw_text_column(data, &data->ray, &data->text, x);
 		x++;
 	}
-}
 
-void set_pixel(t_data *data, t_img *img, int x, int y)
-{
-	int pix;
-	if (data->frame_buffer[y][x] > 0)
-	{
-		pix = y * (img->line_length / 4) + x;
-		img->addr[pix] = data->frame_buffer[y][x];
-	}
-}
-
-void	img_create(t_data *data, t_img *img)
-{
-	img->img = NULL;
-	img->addr = NULL;
-	img->bbp = 0;
-	img->line_length = 0;
-	img->endian = 0;
-	img->img = mlx_new_image(data->mlx_ptr, W_WIDTH, W_HEIGHT);
-	if (!img->img)
-		end_game(ERR_MLX, data, 2);
-	img->addr = (int *)mlx_get_data_addr(img->img, &img->bbp, &img->line_length, &img->endian);
-
-	return ;
-}
-
-void	draw_frame_to_img(t_data *data, t_img *img)
-{
-	int x;
-	int y;
-
-	y = 0;
-	img->img = NULL;
-	img_create(data, img);
-	while (y < W_HEIGHT)
-	{
-		x = 0;
-		while (x < W_WIDTH)
-		{
-			set_pixel(data, img, x, y);
-			x++;
-		}
-		y++;
-	}
-	mlx_put_image_to_window(data->mlx_ptr, data->win, data->img.img, 0, 0);
-	mlx_destroy_image(data->mlx_ptr, data->img.img);
 }
 
 
 void	start_game(t_data *data)
 {
-	setup_player(data);
+	init_player_pos(data);
 	raycasting(data);
 	draw_frame_to_img(data, &data->img);
+	// mlx_put_image_to_window(data->mlx_ptr, data->win, data->img.img, 0, 0);
 	// add hooks
 	mlx_loop(data->mlx_ptr);
 }
