@@ -6,7 +6,7 @@
 /*   By: nclassea <nclassea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 16:07:09 by nclassea          #+#    #+#             */
-/*   Updated: 2024/10/15 16:39:58 by nclassea         ###   ########.fr       */
+/*   Updated: 2024/10/18 19:29:23 by nclassea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,18 @@ void set_pix(t_img *img, int x, int y, int color)
 	int pix;
 
 	pix = y * (img->line_length / 4) + x;
+	printf("pix = %d\n", pix);
 	img->addr[pix] = color;
 }
 
 static void	my_mlx_put_pix(t_data *data, t_img *img, int x, int y)
 {
-	if (data->color_buffer[y][x] != 0)
-		set_pix(img, x, y, data->color_buffer[y][x]);
-	// if (data->frame_buffer[y][x] > 0)
-	// 	set_pix(img, x, y, data->frame_buffer[y][x]);
-	// else if (y < data->win_height / 2)
-	// 	set_image_pixel(image, x, y, data->texinfo.hex_ceiling);
-	// else if (y < data->win_height -1)
-	// 	set_image_pixel(image, x, y, data->texinfo.hex_floor);
+	// if (data->color_buffer[y][x] > 0)
+	// set_pix(img, x, y, data->color_buffer[y][x]);
+	if (data->frame_buffer[y][x] > 0)
+		set_pix(img, x, y, data->frame_buffer[y][x]);
+	
+	
 }
 
 void	img_create(t_data *data, t_img *img)
@@ -48,19 +47,45 @@ void	img_create(t_data *data, t_img *img)
 	return ;
 }
 
+void set_pixel_direct(t_img *img, int x, int y, int color)
+{
+    int pix;
+
+    // Calcul de l'index du pixel
+    pix = (y * img->line_length / 4) + x;
+
+    // Assigner la couleur au pixel (en supposant que l'addr est un tableau d'entiers)
+    img->addr[pix] = color;
+}
+
+
+
 void	draw_frame_to_img(t_data *data, t_img *img)
 {
 	int x;
 	int y;
 
 	y = 0;
-	// img->img = NULL;
+	img->img = NULL;
 	img_create(data, img);
+	
 	while (y < W_HEIGHT)
 	{
 		x = 0;
 		while (x < W_WIDTH)
 		{
+			// int color = data->color_buffer[y][x];
+			// // printf("color[%d][%d] = %d\n", y, x, color);
+			// if (color > 0)
+			// {
+			// 	int pix = y * (img->line_length / 4) + x;
+			// 	img->addr[pix] = color;
+			// }
+			// else
+			// {
+			// 	int pix = y * (img->line_length / 4) + x;
+			// 	img->addr[pix] = 0xFFFFF;
+			// }
 			my_mlx_put_pix(data, img, x, y);
 			x++;
 		}

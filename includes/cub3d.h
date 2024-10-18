@@ -180,3 +180,7 @@ t_map			*ft_maplast(t_map *lst);
 // 
 void	draw_frame_to_img(t_data *data, t_img *img);
 void set_pixel(t_data *data, t_img *img, int x, int y);
+
+
+// TEST
+void	draw_frame_to_img_test(t_data *data, t_img *img);
