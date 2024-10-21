@@ -49,6 +49,7 @@
 # define MINIMAP_SCALE 0.1
 # define RED 0
 # define GREEN 1
+# define M_S 0.1
 // # define NORTH 0
 // # define SOUTH 1
 // # define WEST 2
@@ -57,6 +58,14 @@
 /*key*/
 # define DESTROY_NOTIF 17
 # define NO_EVENT_MASK 0
+# define ESC 65307
+# define W 119
+# define A 97
+# define S 115
+# define D 100
+# define LEFT_ARROW 65361
+# define RIGHT_ARROW 165363
+ 
 
 // MSG
 # define ESC_MSG "\n\nQuitting the game. Thank you for playing!"
@@ -177,10 +186,18 @@ t_map			*ft_mapnew(char *content, int map_height);
 t_map			*ft_maplast(t_map *lst);
 
 
-// 
+// DRAW
 void	draw_frame_to_img(t_data *data, t_img *img);
 void set_pixel(t_data *data, t_img *img, int x, int y);
 
 
-// TEST
-void	draw_frame_to_img_test(t_data *data, t_img *img);
+// RAYCASTING
+void	raycasting(t_data *data);
+void	set_ray_direction(t_data *data, t_ray *ray, t_player *player, int x);
+void	which_text_dir(t_text *text, t_ray *ray);
+int		outside_map(t_data *data, int x, int y);
+void	set_player(t_data *data);
+
+// INIT RAY
+void	set_text(t_text *text);
+void	init_ray(t_ray *ray);
