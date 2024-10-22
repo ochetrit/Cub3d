@@ -6,7 +6,7 @@
 /*   By: nclassea <nclassea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 15:16:30 by nclassea          #+#    #+#             */
-/*   Updated: 2024/10/21 15:20:30 by nclassea         ###   ########.fr       */
+/*   Updated: 2024/10/22 19:53:05 by nclassea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ void	which_text_dir(t_text *text, t_ray *ray)
 
 int	outside_map(t_data *data, int x, int y)
 {
-	if (x < 0.25 || y < 0.25 || x > data->map_width - 1.25 || y > data->map_height - 1.25)
+	if (x < 0.25 || y < 0.25 || x > data->map_width - 1.25
+		|| y > data->map_height - 1.25)
 		return (1);
 	return (0);
 }

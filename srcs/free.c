@@ -62,7 +62,7 @@ void	free_data(t_data *data)
 	if (data->c_color)
 		free(data->c_color);
 	if (data->f_color)
-   		free(data->f_color);
+		free(data->f_color);
 	if (data->map_list)
 		free_map(data->map_list);
 	if (data->map)
@@ -96,7 +96,7 @@ void	free_buffer(t_data *data, int index)
 
 void	end_game(char *msg, t_data *data, int num)
 {
-	ft_putstr_fd(msg, STDERR);  ///Sortie d'erreur si le programme ferme normalement ?
+	ft_putstr_fd(msg, STDERR); //Sortie d'erreur si le programme ferme normalement ?
 	free_buffer(data, num);
 	if (num > 1)
 		mlx_destroy_window(data->mlx_ptr, data->win);

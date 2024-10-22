@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_colors.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ochetrit <ochetrit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nclassea <nclassea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 09:21:20 by ochetrit          #+#    #+#             */
-/*   Updated: 2024/09/27 17:14:42 by ochetrit         ###   ########.fr       */
+/*   Updated: 2024/10/22 20:02:18 by nclassea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,21 @@
 
 int	check_is_char(char *line, int len)
 {
-	int	i;
+	int	number;
 
-	i = 0;
+	number = 0;
 	if (len > 3 || len == 0)
 		return (false);
-	if (len == 3)
+	while (len > 0)
 	{
-		while (line[i] - "255"[i] <= 0 && "255"[i])
-			i++;
-		if (i != 3)
-			return (ft_putstr_fd(ERR_CHAR, STDERR), false);
+		number += *line - '0';
+		if (len > 1)
+			number *= 10;
+		line++;
+		len--;
 	}
+	if (number < 0 || number > 255)
+		return (false);
 	return (true);
 }
 
@@ -61,7 +64,6 @@ int	check_color(char *line)
 
 int	check_comas(char *line, int comas[2])
 {
-
 	while (*line != 'C' && *line != 'F' && *line)
 		line++;
 	line++;
@@ -90,8 +92,8 @@ int	check_comas(char *line, int comas[2])
 unsigned char	*build_color(char *line, int *key)
 {
 	unsigned char	*color;
-	int		comas[2];
-	int	i;
+	int				comas[2];
+	int				i;
 
 	comas[0] = 0;
 	comas[1] = 0;
@@ -117,8 +119,8 @@ unsigned char	*build_color(char *line, int *key)
 
 void	init_color_key(t_data *data)
 {
-	data->c_color_key = data->c_color[0] << 16 |
-	data->c_color[1] << 8 | data->c_color[2];
-	data->f_color_key = data->f_color[0] << 16 |
-	data->f_color[1] << 8 | data->f_color[2];
+	data->c_color_key = data->c_color[0] << 16
+		| data->c_color[1] << 8 | data->c_color[2];
+	data->f_color_key = data->f_color[0] << 16
+		| data->f_color[1] << 8 | data->f_color[2];
 }

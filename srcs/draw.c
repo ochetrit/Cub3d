@@ -6,16 +6,15 @@
 /*   By: nclassea <nclassea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 16:07:09 by nclassea          #+#    #+#             */
-/*   Updated: 2024/10/21 15:38:49 by nclassea         ###   ########.fr       */
+/*   Updated: 2024/10/22 19:55:49 by nclassea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-
-void set_pix(t_img *img, int x, int y, int color)
+void	set_pix(t_img *img, int x, int y, int color)
 {
-	int pix;
+	int	pix;
 
 	pix = y * (img->line_length / 4) + x;
 	img->addr[pix] = color;
@@ -41,20 +40,19 @@ void	img_create(t_data *data, t_img *img)
 	img->img = mlx_new_image(data->mlx_ptr, W_WIDTH, W_HEIGHT);
 	if (!img->img)
 		end_game(ERR_MLX, data, 2);
-	img->addr = (int *)mlx_get_data_addr(img->img, &img->bbp, &img->line_length, &img->endian);
+	img->addr = (int *)mlx_get_data_addr(img->img, &img->bbp,
+			&img->line_length, &img->endian);
 	return ;
 }
 
-
 void	draw_frame_to_img(t_data *data, t_img *img)
 {
-	int x;
-	int y;
+	int	x;
+	int	y;
 
 	y = 0;
 	img->img = NULL;
 	img_create(data, img);
-	
 	while (y < W_HEIGHT)
 	{
 		x = 0;

@@ -12,14 +12,11 @@
 
 #include "../includes/cub3d.h"
 
-
 void	init_point(t_point *point)
 {
 	point->size_x = 0;
 	point->size_y = 0;
 }
-
-
 
 void	init_player(t_player *player)
 {
@@ -31,19 +28,18 @@ void	init_player(t_player *player)
 	player->plane_y = 0;
 }
 
-t_data	*init_data(char *file)
+void	init_keys(t_keys *keys)
 {
-	t_data	*data;
+	keys->w = 0;
+	keys->a = 0;
+	keys->s = 0;
+	keys->d = 0;
+	keys->left = 0;
+	keys->right = 0;
+}
 
-	data = malloc(sizeof(t_data));
-	if (!data)
-		return (ft_putstr_fd(ERR_MALLOC, STDERR), NULL);
-	data->fd = open(file, O_RDONLY);
-	if (data->fd < 0)
-	{
-		free(data);
-		return (ft_putstr_fd(ERR_FILE, STDERR), NULL);
-	}
+void	init_datas(t_data *data)
+{
 	data->line = NULL;
 	data->map = NULL;
 	data->map_height = 0;
@@ -59,7 +55,24 @@ t_data	*init_data(char *file)
 	data->win = NULL;
 	data->texture_buffer = NULL;
 	data->frame_buffer = NULL;
+}
+
+t_data	*init_data(char *file)
+{
+	t_data	*data;
+
+	data = malloc(sizeof(t_data));
+	if (!data)
+		return (ft_putstr_fd(ERR_MALLOC, STDERR), NULL);
+	data->fd = open(file, O_RDONLY);
+	if (data->fd < 0)
+	{
+		free(data);
+		return (ft_putstr_fd(ERR_FILE, STDERR), NULL);
+	}
+	init_datas(data);
 	init_point(&data->screen_size);
 	init_player(&data->player);
+	init_keys(&data->keys);
 	return (data);
 }

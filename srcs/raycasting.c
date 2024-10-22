@@ -6,12 +6,11 @@
 /*   By: nclassea <nclassea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 15:12:09 by nclassea          #+#    #+#             */
-/*   Updated: 2024/10/22 15:04:05 by nclassea         ###   ########.fr       */
+/*   Updated: 2024/10/22 20:06:36 by nclassea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
-
 
 void	set_dda(t_data *data, t_ray *ray)
 {
@@ -23,7 +22,8 @@ void	set_dda(t_data *data, t_ray *ray)
 	else
 	{
 		ray->step_x = 1;
-		ray->sidedist_x = (ray->map_x + 1.0 - data->player.pos_x) * ray->deltadist_x;
+		ray->sidedist_x = (ray->map_x + 1.0 - data->player.pos_x)
+			* ray->deltadist_x;
 	}
 	if (ray->dir_y < 0)
 	{
@@ -33,14 +33,14 @@ void	set_dda(t_data *data, t_ray *ray)
 	else
 	{
 		ray->step_y = 1;
-		ray->sidedist_y = (ray->map_y + 1.0 - data->player.pos_y) * ray->deltadist_y;
+		ray->sidedist_y = (ray->map_y + 1.0 - data->player.pos_y)
+			* ray->deltadist_y;
 	}
 }
 
-
 void	trace_ray_path(t_data *data, t_ray *ray)
 {
-	int hit;
+	int	hit;
 
 	hit = 0;
 	while (hit == 0)
@@ -84,13 +84,10 @@ void	calc_wall_height(t_data *data, t_ray *ray)
 	ray->wall_x -= floor(ray->wall_x);
 }
 
-
 void	set_text_pix(t_data *data, t_ray *ray, t_text *text, int x)
 {
-	int	color;
-	int	y;
-	double	step;
-	double	pos;
+	int		color;
+	int		y;
 
 	set_text(text);
 	which_text_dir(text, ray);
@@ -98,22 +95,20 @@ void	set_text_pix(t_data *data, t_ray *ray, t_text *text, int x)
 	text->text_x = (int)(ray->wall_x * TEXT_SIZE);
 	if (ray->side == 0 && ray->dir_x > 0)
 		text->text_x = TEXT_SIZE - text->text_x - 1;
-	step = 1.0 * TEXT_SIZE / ray->line_height;
-	pos = (ray->draw_start - W_HEIGHT / 2 + ray->line_height / 2) * step;
+	text->step = 1.0 * TEXT_SIZE / ray->line_height;
+	text->pos = (ray->draw_start - W_HEIGHT / 2 + ray->line_height / 2) * text->step;
 	while (y < ray->draw_end)
 	{
-		color = data->texture_buffer[text->text_index][TEXT_SIZE * ((int)pos & (TEXT_SIZE - 1)) + text->text_x]; // donne l'adresse du pixel de couleur dans la texture
-		pos += step;
-
+		color = data->texture_buffer[text->text_index][TEXT_SIZE
+			* ((int)text->pos & (TEXT_SIZE - 1)) + text->text_x];
+		text->pos += text->step;
 		if (text->text_index == NO || text->text_index == SO)
-			color = (color >> 1) & 0x7F7F7F; // effet d'ombrage applique sur les textures NO et SO
-
+			color = (color >> 1) & 0x7F7F7F;
 		if (color > 0)
-			data->frame_buffer[y][x] = color; 
+			data->frame_buffer[y][x] = color;
 		y++;
 	}
 }
-
 
 void	raycasting(t_data *data)
 {

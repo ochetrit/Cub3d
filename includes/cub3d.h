@@ -36,7 +36,8 @@
 # define MINIMAP_SCALE 0.1
 # define RED 0
 # define GREEN 1
-# define M_S 0.1
+# define M_S 0.03
+# define R_S 0.03
 
 /*key*/
 # define DESTROY_NOTIF 17
@@ -49,7 +50,10 @@
 # define LEFT_ARROW 65361
 # define RIGHT_ARROW 65363
 # define HITBOX 0.1
-# define R_S 0.1
+# define KEYPRESS 2
+# define KEYPRESSMASK 1L << 0
+# define KEYRELEASE 3
+# define KEYRELEASEMASK 1L << 1
  
 // MSG
 # define ESC_MSG "\n\nQuitting the game. Thank you for playing!\n"
@@ -57,7 +61,7 @@
 # define ERR_ARG "Error\nInvalid argument\n"
 # define ERR_FILE "Error\nInvalid file\n"
 # define ERR_MALLOC "Error\nMalloc failed\n"
-# define ERR_CHAR "Error\nI need an invalid char\n"
+# define ERR_CHAR "Error\nI need a valid char\n"
 # define ERR_COLOR "Error\nInvalid color\n"
 # define ERR_MLX "Error\nMlx failed\n"
 # define ERR_COLOR2 "Error\nInvalid comas in color\n"
@@ -73,6 +77,16 @@ typedef struct	s_point
 	int	size_x;
 	int	size_y;
 }				t_point;
+
+typedef struct s_keys
+{
+	int		w;
+	int		a;
+	int		s;
+	int		d;
+	int		left;
+	int		right;
+}				t_keys;
 
 typedef struct img
 {
@@ -99,6 +113,8 @@ typedef struct s_text
 	int		text_x;
 	int		text_y;
 	int		text_width;
+	double	step;
+	double	pos;
 }				t_text;
 
 typedef struct	s_ray
@@ -156,6 +172,7 @@ typedef struct	s_data
 	t_player	player;
 	t_text		text;
 	t_img		img;
+	t_keys		keys;
 	unsigned char	*c_color;
 	unsigned int		c_color_key;
 	unsigned char	*f_color;
@@ -182,13 +199,14 @@ void			init_color_key(t_data *data);
 void			ft_mapadd_back(t_data *data, t_map **head, t_map *new);
 t_map			*ft_mapnew(char *content, int map_height);
 t_map			*ft_maplast(t_map *lst);
-
+void			init_window(t_data *data);
+int				red_cross(t_data *data);
+t_data			*parsing(int ac, char **av);
 
 // DRAW
 void	draw_frame_to_img(t_data *data, t_img *img);
 void 	set_pixel(t_data *data, t_img *img, int x, int y);
 void 	init_frame_buffer(t_data *data);
-
 
 // RAYCASTING
 void	raycasting(t_data *data);
@@ -201,5 +219,12 @@ void	set_player(t_data *data);
 void	set_text(t_text *text);
 void	init_ray(t_ray *ray);
 
+// MOVES
+int	game_loop(t_data *data);
+int	check_hitbox(char **map, double x, double y);
+void	rotate_right(t_player *player);
+void	rotate_left(t_player *player);
 
-int	key_handler(int key, t_data *data);
+// HOOKS
+int	key_release(int key, t_data *data);
+int	key_press(int key, t_data *data);

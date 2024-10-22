@@ -6,7 +6,7 @@
 /*   By: nclassea <nclassea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 17:33:56 by ochetrit          #+#    #+#             */
-/*   Updated: 2024/10/15 20:20:54 by nclassea         ###   ########.fr       */
+/*   Updated: 2024/10/22 20:04:16 by nclassea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,15 @@ int	check_map_line(char *line, t_data *data)
 			line++;
 		while (*line && (*line == '1' || *line == '0'))
 			line++;
-		if ((*line == 'N' || *line == 'S' || *line == 'W' || *line == 'E') && data->map_start == 0)
+		if ((*line == 'N' || *line == 'S' || *line == 'W'
+				|| *line == 'E') && data->map_start == 0)
 		{
 			which_first_dir(data, *line);
 			data->map_start++;
 			line++;
 		}
-		else if ((*line == 'N' || *line == 'S' || *line == 'W' || *line == 'E') && data->map_start != 0)
+		else if ((*line == 'N' || *line == 'S' || *line == 'W'
+				|| *line == 'E') && data->map_start != 0)
 			return (ft_putstr_fd(ERR_SPWN, STDERR), false);
 		while (*line && (*line == '1' || *line == '0'))
 			line++;
@@ -59,7 +61,8 @@ char	*skip_empty_lines(int fd)
 	while (line)
 	{
 		i = 0;
-		while (line[i] && (line[i] == ' ' || line[i] == '\t' || line[i] == '\n'))
+		while (line[i] && (line[i] == ' '
+				|| line[i] == '\t' || line[i] == '\n'))
 			i++;
 		if (line[i])
 			return (line);
@@ -72,7 +75,7 @@ char	*skip_empty_lines(int fd)
 int	build_map(t_data *data, t_map *map, int y)
 {
 	int	x;
-	
+
 	data->map = malloc(sizeof(char *) * (data->map_height + 1));
 	if (!data->map)
 		return (ft_putstr_fd(ERR_MALLOC, STDERR), false);
@@ -114,7 +117,8 @@ int	init_map(t_data *data)
 		if (!row)
 			return (get_next_line(data->fd, true), free(data->line), false);
 		else if (!row->map)
-			return (get_next_line(data->fd, true), free(row), free(data->line), true);
+			return (get_next_line(data->fd, true),
+				free(row), free(data->line), true);
 		ft_mapadd_back(data, data->map_list, row);
 		free(data->line);
 		data->map_height++;

@@ -6,11 +6,13 @@
 /*   By: nclassea <nclassea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 09:21:12 by ochetrit          #+#    #+#             */
-/*   Updated: 2024/10/02 16:21:39 by nclassea         ###   ########.fr       */
+/*   Updated: 2024/10/22 20:05:39 by nclassea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
+
+// CORRIGER LE NO ++ caracteres en + (VOIR NO 3)
 
 int	which_one(char *line)
 {
@@ -119,4 +121,4 @@ int	find_path_and_color(t_data *data)
 		data->line = get_next_line(data->fd, false);
 	}
 	return (false);
-	}
+}
