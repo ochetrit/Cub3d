@@ -64,8 +64,9 @@
 # define S 115
 # define D 100
 # define LEFT_ARROW 65361
-# define RIGHT_ARROW 165363
+# define RIGHT_ARROW 65363
 # define HITBOX 0.1
+# define R_S 0.1
  
 
 // MSG
