@@ -57,6 +57,8 @@ t_data	*init_data(char *file)
 	data->f_color = NULL;
 	data->mlx_ptr = NULL;
 	data->win = NULL;
+	data->texture_buffer = NULL;
+	data->frame_buffer = NULL;
 	init_point(&data->screen_size);
 	init_player(&data->player);
 	return (data);

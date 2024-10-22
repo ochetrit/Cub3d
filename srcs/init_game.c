@@ -112,12 +112,21 @@ void init_frame_buffer(t_data *data)
 	int i;
 
 	i = 0;
-	data->frame_buffer = malloc(sizeof(int *) * W_HEIGHT);
+	if (data->frame_buffer)
+	{
+		while (i < W_HEIGHT)
+		{
+			ft_bzero(data->frame_buffer[i], W_WIDTH * sizeof(int));
+			i++;
+		}
+	}
+	else
+		data->frame_buffer = malloc(sizeof(int *) * W_HEIGHT);
 	if (!data->frame_buffer)
 		end_game(ERR_MALLOC, data, 7); 
 	while (i < W_HEIGHT)
 	{
-		data->frame_buffer[i] = malloc(sizeof(int) * W_WIDTH);
+		data->frame_buffer[i] = ft_calloc(W_WIDTH, sizeof(int));
 		if (!data->frame_buffer[i])
 			end_game(ERR_MALLOC, data, 8 + i);
 		i++;

@@ -6,7 +6,7 @@
 /*   By: nclassea <nclassea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 15:12:09 by nclassea          #+#    #+#             */
-/*   Updated: 2024/10/21 18:05:19 by nclassea         ###   ########.fr       */
+/*   Updated: 2024/10/22 15:04:05 by nclassea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,6 @@ void	set_dda(t_data *data, t_ray *ray)
 }
 
 
-
-
 void	trace_ray_path(t_data *data, t_ray *ray)
 {
 	int hit;
@@ -59,8 +57,8 @@ void	trace_ray_path(t_data *data, t_ray *ray)
 			ray->map_y += ray->step_y;
 			ray->side = 1;
 		}
-		// if (outside_map(data, ray->map_x, ray->map_y))
-		// 	break ;
+		if (outside_map(data, ray->map_x, ray->map_y))
+			break ;
 		if (data->map[ray->map_y][ray->map_x] == '1')
 			hit = 1;
 	}
@@ -130,20 +128,6 @@ void	raycasting(t_data *data)
 		trace_ray_path(data, &data->ray);
 		calc_wall_height(data, &data->ray);
 		set_text_pix(data, &data->ray, &data->text, x);
-		// printf("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\n");
-		// printf("ray->map_x = %d\n", data->ray.map_x);
-		// printf("ray->map_y = %d\n", data->ray.map_y);
-		// printf("ray->side = %d\n", data->ray.side);
-		// printf("ray->sidedist_x = %f\n", data->ray.sidedist_x);
-		// printf("ray->sidedist_y = %f\n", data->ray.sidedist_y);
-		// printf("ray->deltadist_x = %f\n", data->ray.deltadist_x);
-		// printf("ray->deltadist_y = %f\n", data->ray.deltadist_y);
-		// printf("ray->draw_start = %d\n", data->ray.draw_start);
-		// printf("ray->draw_end = %d\n", data->ray.draw_end);
-		// printf("ray->line_height = %d\n", data->ray.line_height);
-		// printf("ray->wall_dist = %f\n", data->ray.wall_dist);
-		// printf("ray->wall_x = %f\n", data->ray.wall_x);
-		// printf("ray->camera_x = %f\n", data->ray.camera_x);
 		x++;
 	}
 }
