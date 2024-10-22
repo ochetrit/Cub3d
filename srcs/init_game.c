@@ -26,17 +26,16 @@ void	check_window(t_data *data)
 	screen_size = get_screen_size(data);
 	if (W_WIDTH > screen_size.size_x || W_HEIGHT > screen_size.size_y)
 		end_game(ERR_MLX, data, 2);
-
 }
 
 void	init_window(t_data *data)
 {
 	data->mlx_ptr = mlx_init();
 	if (!data->mlx_ptr)
-		end_game(ERR_MLX, data, 2);
+		end_game(ERR_MLX, data, 0);
 	data->win = mlx_new_window(data->mlx_ptr, W_WIDTH, W_HEIGHT, W_TITLE);
 	if (!data->win)
-		end_game(ERR_MLX, data, 2);
+		end_game(ERR_MLX, data, 1);
 	check_window(data);
 }
 
@@ -67,7 +66,7 @@ void set_img(t_data *data, t_img *img, char *path)
 	return ;
 }
 
-int	*load_text_img(t_data *data, char *path)
+int	*load_text_img(t_data *data, char *path, int index)
 {
 	t_img img;
 	int *buf;
@@ -75,9 +74,12 @@ int	*load_text_img(t_data *data, char *path)
 	int y;
 
 	set_img(data, &img, path);
-	buf = ft_calloc(1, sizeof * buf * (64 * 64));
+	buf = ft_calloc(1, sizeof(int) * (64 * 64));
 	if (!buf)
-		end_game(ERR_MLX, data, 2);
+	{
+		mlx_destroy_image(data->mlx_ptr, img.img);
+		end_game(ERR_MLX, data, index);
+	}
 	y = 0;
 	while (y < 64)
 	{
@@ -95,13 +97,13 @@ int	*load_text_img(t_data *data, char *path)
 
 void	init_textures(t_data *data)
 {
-	data->texture_buffer = ft_calloc(4, sizeof * data->texture_buffer);
+	data->texture_buffer = ft_calloc(4, sizeof(int *));
 	if (!data->texture_buffer)
 		end_game(ERR_MALLOC, data, 2);
-	data->texture_buffer[NO] = load_text_img(data, data->path_no);
-	data->texture_buffer[SO] = load_text_img(data, data->path_so);
-	data->texture_buffer[EA] = load_text_img(data, data->path_ea);
-	data->texture_buffer[WE] = load_text_img(data, data->path_we);
+	data->texture_buffer[NO] = load_text_img(data, data->path_no, 3);
+	data->texture_buffer[SO] = load_text_img(data, data->path_so, 4);
+	data->texture_buffer[EA] = load_text_img(data, data->path_ea, 5);
+	data->texture_buffer[WE] = load_text_img(data, data->path_we, 6);
 }
 
 
@@ -112,13 +114,12 @@ void init_frame_buffer(t_data *data)
 	i = 0;
 	data->frame_buffer = malloc(sizeof(int *) * W_HEIGHT);
 	if (!data->frame_buffer)
-		end_game(ERR_MALLOC, data, 2);
-
+		end_game(ERR_MALLOC, data, 7);
 	while (i < W_HEIGHT)
 	{
 		data->frame_buffer[i] = malloc(sizeof(int) * W_WIDTH);
 		if (!data->frame_buffer[i])
-			end_game(ERR_MALLOC, data, 2);
+			end_game(ERR_MALLOC, data, 8 + i);
 		i++;
 	}
 }
@@ -130,5 +131,4 @@ void	init_game(t_data *data)
 	init_textures(data);
 	init_frame_buffer(data);
 	mlx_hook(data->win, DESTROY_NOTIF, NO_EVENT_MASK, red_cross, data);
-	
 }

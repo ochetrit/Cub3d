@@ -62,9 +62,7 @@ void	free_data(t_data *data)
 	if (data->c_color)
 		free(data->c_color);
 	if (data->f_color)
-    free(data->f_color);
-	if (data->texture_buffer)
-		free(data->texture_buffer);
+   		free(data->f_color);
 	if (data->map_list)
 		free_map(data->map_list);
 	if (data->map)
@@ -72,13 +70,40 @@ void	free_data(t_data *data)
 	free(data);
 }
 
+void	free_buffer(t_data *data, int index)
+{
+	int	i;
+
+	if (index > 3)
+		free(data->texture_buffer[NO]);
+	if (index > 4)
+		free(data->texture_buffer[SO]);
+	if (index > 5)
+		free(data->texture_buffer[EA]);
+	if (index > 6)
+		free(data->texture_buffer[WE]);
+	if (index > 2)
+		free(data->texture_buffer);
+	i = 0;
+	while (i < index - 8 && i < W_HEIGHT)
+	{
+		free(data->frame_buffer[i]);
+		i++;
+	}
+	if (index > 7)
+		free(data->frame_buffer);
+}
+
 void	end_game(char *msg, t_data *data, int num)
 {
-	(void)num;
-	ft_putstr_fd(msg, STDERR);
-	mlx_destroy_window(data->mlx_ptr, data->win);
-	mlx_destroy_display(data->mlx_ptr);
-	free(data->mlx_ptr);
+	ft_putstr_fd(msg, STDERR);  ///Sortie d'erreur si le programme ferme normalement ?
+	free_buffer(data, num);
+	if (num > 1)
+		mlx_destroy_window(data->mlx_ptr, data->win);
+	if (num > 0)
+		mlx_destroy_display(data->mlx_ptr);
+	if (num > 0)
+		free(data->mlx_ptr);
 	free_data(data);
-	exit(num);
+	exit(0);
 }

@@ -147,7 +147,7 @@ int	key_handler(int key, t_data *data)
 {
 	// esc
 	if (key == ESC)
-		end_game(ESC_MSG, data, 2);
+		end_game(ESC_MSG, data, 7 + W_HEIGHT);
 	if (key == W)
 		move_forward(data);
 	if (key == A)
