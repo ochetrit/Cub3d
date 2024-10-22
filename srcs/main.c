@@ -209,7 +209,7 @@ void    rotate_right(t_data *data, t_player *player)
 int	key_handler(int key, t_data *data)
 {
 	if (key == ESC)
-		end_game(ESC_MSG, data, 7 + W_HEIGHT);
+		end_game(ESC_MSG, data, 8 + W_HEIGHT);
 	if (key == W)
 		move_forward(data);
 	if (key == A)

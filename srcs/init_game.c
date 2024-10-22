@@ -41,7 +41,7 @@ void	init_window(t_data *data)
 
 int	red_cross(t_data *data)
 {
-	end_game(ESC_MSG, data, 2);
+	end_game(ESC_MSG, data, 8 + W_HEIGHT);
 	return (0);
 }
 
