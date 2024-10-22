@@ -20,19 +20,6 @@
 #include "../libft/libft.h"
 # include "../minilibx-linux/mlx.h"
 
-# define STDERR STDERR_FILENO
-# define ERR_ARG "Error\nInvalid argument\n"
-# define ERR_FILE "Error\nInvalid file\n"
-# define ERR_MALLOC "Error\nMalloc failed\n"
-# define ERR_CHAR "Error\nI need an invalid char\n"
-# define ERR_COLOR "Error\nInvalid color\n"
-# define ERR_MLX "Error\nMlx failed\n"
-# define ERR_COLOR2 "Error\nInvalid comas in color\n"
-# define ERR_SPWN "Error\nInvalid spawn\n"
-# define ERR_MAP1 "Error\nInvalid item\n"
-# define ERR_WALL "Error\nInvalid wall\n"
-# define TEXT_LOAD_FAILED "Error\nTexture loading failed\n"
-# define ERR_MLX_NEW_IMG "Error\nMlx new image failed\n"
 # define NO 0
 # define SO 1
 # define WE 2
@@ -50,10 +37,6 @@
 # define RED 0
 # define GREEN 1
 # define M_S 0.1
-// # define NORTH 0
-// # define SOUTH 1
-// # define WEST 2
-// # define EAST 3
 
 /*key*/
 # define DESTROY_NOTIF 17
@@ -68,9 +51,22 @@
 # define HITBOX 0.1
 # define R_S 0.1
  
-
 // MSG
-# define ESC_MSG "\n\nQuitting the game. Thank you for playing!"
+# define ESC_MSG "\n\nQuitting the game. Thank you for playing!\n"
+# define STDERR STDERR_FILENO
+# define ERR_ARG "Error\nInvalid argument\n"
+# define ERR_FILE "Error\nInvalid file\n"
+# define ERR_MALLOC "Error\nMalloc failed\n"
+# define ERR_CHAR "Error\nI need an invalid char\n"
+# define ERR_COLOR "Error\nInvalid color\n"
+# define ERR_MLX "Error\nMlx failed\n"
+# define ERR_COLOR2 "Error\nInvalid comas in color\n"
+# define ERR_SPWN "Error\nInvalid spawn\n"
+# define ERR_NB_PLAYER "Error\nInvalid number of player\n"
+# define ERR_MAP1 "Error\nInvalid item\n"
+# define ERR_WALL "Error\nInvalid wall\n"
+# define TEXT_LOAD_FAILED "Error\nTexture loading failed\n"
+# define ERR_MLX_NEW_IMG "Error\nMlx new image failed\n"
 
 typedef struct	s_point
 {
@@ -204,3 +200,6 @@ void	set_player(t_data *data);
 // INIT RAY
 void	set_text(t_text *text);
 void	init_ray(t_ray *ray);
+
+
+int	key_handler(int key, t_data *data);
