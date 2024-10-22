@@ -83,67 +83,87 @@ t_data	*parsing(int ac, char **av)
 	return (data);
 }
 
+int	check_hitbox(char **map, double x, double y)
+{
+	if (map[(int)(y + HITBOX)][(int)x] == '1')
+		return (false);
+	else if (map[(int)(y - HITBOX)][(int)x] == '1')
+		return (false);
+	else if (map[(int)y][(int)(x + HITBOX)] == '1')
+		return (false);
+	else if (map[(int)y][(int)(x - HITBOX)] == '1')
+		return (false);
+	return (true);
+}
+
 void	move_forward(t_data *data)
 {
-	double	new_x;
-	double	new_y;
+	double	check_wall_x;
+	double	check_wall_y;
 
-	new_x = data->player.pos_x + data->player.dir_x * M_S;
-	new_y = data->player.pos_y + data->player.dir_y * M_S;
-	if (data->map[(int)(new_y)][(int)(new_x)] != '1')
+	check_wall_x = data->player.pos_x + data->player.dir_x * (M_S + HITBOX);
+	check_wall_y = data->player.pos_y + data->player.dir_y * (M_S + HITBOX);
+	if (data->map[(int)(check_wall_y)][(int)(check_wall_x)] != '1' && check_hitbox(data->map, check_wall_x, check_wall_y))
 	{
-		data->player.pos_x = new_x;
-		data->player.pos_y = new_y;
+		data->player.pos_x = data->player.pos_x + data->player.dir_x * M_S;
+		data->player.pos_y = data->player.pos_y + data->player.dir_y * M_S;;
 	}
-	printf("x: %f, y: %f\n", data->player.pos_x, data->player.pos_y);
+	init_ray(&data->ray);
+	init_frame_buffer(data);
 	raycasting(data);
 	draw_frame_to_img(data, &data->img);
 }
 
 void	move_right(t_data *data)
 {
-	double	new_x;
-	double	new_y;
+	double	check_wall_x;
+	double	check_wall_y;
 
-	new_x = data->player.pos_x - data->player.dir_y * M_S;
-	new_y = data->player.pos_y + data->player.dir_x * M_S;
-	if (data->map[(int)new_y][(int)new_x] != '1')
+	check_wall_x = data->player.pos_x - data->player.dir_y * (M_S + HITBOX);
+	check_wall_y = data->player.pos_y + data->player.dir_x * (M_S + HITBOX);
+	if (data->map[(int)check_wall_y][(int)check_wall_x] != '1' && check_hitbox(data->map, check_wall_x, check_wall_y))
 	{
-		data->player.pos_x = new_x;
-		data->player.pos_y = new_y;
+		data->player.pos_x = data->player.pos_x - data->player.dir_y * M_S;
+		data->player.pos_y = data->player.pos_y + data->player.dir_x * M_S;
 	}
+	init_ray(&data->ray);
+	init_frame_buffer(data);
 	raycasting(data);
 	draw_frame_to_img(data, &data->img);
 }
 
 void	move_back(t_data *data)
 {
-	double	new_x;
-	double	new_y;
+	double	check_wall_x;
+	double	check_wall_y;
 
-	new_x = data->player.pos_x - data->player.dir_x * M_S;
-	new_y = data->player.pos_y - data->player.dir_y * M_S;
-	if (data->map[(int)new_y][(int)new_x] != '1')
+	check_wall_x = data->player.pos_x - data->player.dir_x * (M_S + HITBOX);
+	check_wall_y = data->player.pos_y - data->player.dir_y * (M_S + HITBOX);
+	if (data->map[(int)(check_wall_y)][(int)check_wall_x] != '1' && check_hitbox(data->map, check_wall_x, check_wall_y))
 	{
-		data->player.pos_x = new_x;
-		data->player.pos_y = new_y;
+		data->player.pos_x = data->player.pos_x - data->player.dir_x * M_S;
+		data->player.pos_y = data->player.pos_y - data->player.dir_y * M_S ;
 	}
+	init_ray(&data->ray);
+	init_frame_buffer(data);
 	raycasting(data);
 	draw_frame_to_img(data, &data->img);
 }
 
 void	move_left(t_data *data)
 {
-	double	new_x;
-	double	new_y;
+	double	check_wall_x;
+	double	check_wall_y;
 
-	new_x = data->player.pos_x + data->player.dir_y * M_S;
-	new_y = data->player.pos_y - data->player.dir_x * M_S;
-	if (data->map[(int)new_y][(int)new_x] != '1')
+	check_wall_x = data->player.pos_x + data->player.dir_y * (M_S + HITBOX);
+	check_wall_y = data->player.pos_y - data->player.dir_x * (M_S + HITBOX);
+	if (data->map[(int)check_wall_y][(int)check_wall_x] != '1' && check_hitbox(data->map, check_wall_x, check_wall_y))
 	{
-		data->player.pos_x = new_x;
-		data->player.pos_y = new_y;
+		data->player.pos_x = data->player.pos_x + data->player.dir_y * M_S;
+		data->player.pos_y = data->player.pos_y - data->player.dir_x * M_S;
 	}
+	init_ray(&data->ray);
+	init_frame_buffer(data);
 	raycasting(data);
 	draw_frame_to_img(data, &data->img);
 }

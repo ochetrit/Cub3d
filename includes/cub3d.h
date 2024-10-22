@@ -65,6 +65,7 @@
 # define D 100
 # define LEFT_ARROW 65361
 # define RIGHT_ARROW 165363
+# define HITBOX 0.1
  
 
 // MSG
@@ -188,7 +189,8 @@ t_map			*ft_maplast(t_map *lst);
 
 // DRAW
 void	draw_frame_to_img(t_data *data, t_img *img);
-void set_pixel(t_data *data, t_img *img, int x, int y);
+void 	set_pixel(t_data *data, t_img *img, int x, int y);
+void 	init_frame_buffer(t_data *data);
 
 
 // RAYCASTING
