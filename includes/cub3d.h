@@ -16,6 +16,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <stdbool.h>
+#include <math.h>
 #include "../libft/libft.h"
 # include "../minilibx-linux/mlx.h"
 
@@ -31,6 +32,7 @@
 # define ERR_MAP1 "Error\nInvalid item\n"
 # define ERR_WALL "Error\nInvalid wall\n"
 # define TEXT_LOAD_FAILED "Error\nTexture loading failed\n"
+# define ERR_MLX_NEW_IMG "Error\nMlx new image failed\n"
 # define NO 0
 # define SO 1
 # define WE 2
@@ -43,6 +45,11 @@
 # define W_TITLE "Cub3D"
 # define W_WIDTH 640
 # define W_HEIGHT 480
+# define TEXT_SIZE 64
+# define MINIMAP_SCALE 0.1
+# define RED 0
+# define GREEN 1
+# define M_S 0.1
 // # define NORTH 0
 // # define SOUTH 1
 // # define WEST 2
@@ -51,6 +58,16 @@
 /*key*/
 # define DESTROY_NOTIF 17
 # define NO_EVENT_MASK 0
+# define ESC 65307
+# define W 119
+# define A 97
+# define S 115
+# define D 100
+# define LEFT_ARROW 65361
+# define RIGHT_ARROW 65363
+# define HITBOX 0.1
+# define R_S 0.1
+ 
 
 // MSG
 # define ESC_MSG "\n\nQuitting the game. Thank you for playing!"
@@ -64,10 +81,10 @@ typedef struct	s_point
 typedef struct img
 {
 	void	*img;
-	char	*addr; // adresse pixels de l img
-	int		bbp; // bits per pixel
-	int		line_length; // longueur de ligne en octets
-	int		endian; // Endianness de l'image (0 pour big endian, 1 pour little endian)
+	int		*addr;
+	int		bbp;
+	int		line_length;
+	int		endian;
 }				t_img;
 
 typedef struct s_player
@@ -79,6 +96,36 @@ typedef struct s_player
 	double plane_x;
 	double plane_y;
 }				t_player;
+
+typedef struct s_text
+{
+	int		text_index;
+	int		text_x;
+	int		text_y;
+	int		text_width;
+}				t_text;
+
+typedef struct	s_ray
+{
+	double camera_x;
+	double dir_x;
+	double dir_y;
+	int map_x;
+	int map_y;
+	int step_x;
+	int step_y;
+	double sidedist_x;
+	double sidedist_y;
+	double deltadist_x;
+	double deltadist_y;
+	double wall_dist;
+	double wall_x;
+	int side;
+	int line_height;
+	int draw_start;
+	int draw_end;
+}	t_ray;
+
 
 typedef	struct s_map
 {
@@ -106,8 +153,13 @@ typedef struct	s_data
 	void	*mlx_ptr;
 	void	*win;
 	int		**texture_buffer;
+	int		**frame_buffer;
+	int		**color_buffer;
 	t_point	screen_size;
+	t_ray	ray;
 	t_player	player;
+	t_text		text;
+	t_img		img;
 	unsigned char	*c_color;
 	unsigned int		c_color_key;
 	unsigned char	*f_color;
@@ -134,3 +186,21 @@ void			init_color_key(t_data *data);
 void			ft_mapadd_back(t_data *data, t_map **head, t_map *new);
 t_map			*ft_mapnew(char *content, int map_height);
 t_map			*ft_maplast(t_map *lst);
+
+
+// DRAW
+void	draw_frame_to_img(t_data *data, t_img *img);
+void 	set_pixel(t_data *data, t_img *img, int x, int y);
+void 	init_frame_buffer(t_data *data);
+
+
+// RAYCASTING
+void	raycasting(t_data *data);
+void	set_ray_direction(t_data *data, t_ray *ray, t_player *player, int x);
+void	which_text_dir(t_text *text, t_ray *ray);
+int		outside_map(t_data *data, int x, int y);
+void	set_player(t_data *data);
+
+// INIT RAY
+void	set_text(t_text *text);
+void	init_ray(t_ray *ray);

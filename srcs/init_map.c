@@ -6,6 +6,7 @@
 /*   By: nclassea <nclassea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 17:33:56 by ochetrit          #+#    #+#             */
+/*   Updated: 2024/10/15 20:20:54 by nclassea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +15,13 @@
 void	which_first_dir(t_data *data, char dir)
 {
 	if (dir == 'N')
-		data->first_direction = 'N';
+		data->first_dir = 'N';
 	else if (dir == 'S')
-		data->first_direction = 'S';
+		data->first_dir = 'S';
 	else if (dir == 'W')
-		data->first_direction = 'W';
+		data->first_dir = 'W';
 	else if (dir == 'E')
-		data->first_direction = 'E';
+		data->first_dir = 'E';
 }
 
 int	check_map_line(char *line, t_data *data)

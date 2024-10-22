@@ -19,6 +19,8 @@ void	init_point(t_point *point)
 	point->size_y = 0;
 }
 
+
+
 void	init_player(t_player *player)
 {
 	player->pos_x = 0;
