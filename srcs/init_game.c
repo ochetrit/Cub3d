@@ -114,7 +114,7 @@ void init_frame_buffer(t_data *data)
 	i = 0;
 	data->frame_buffer = malloc(sizeof(int *) * W_HEIGHT);
 	if (!data->frame_buffer)
-		end_game(ERR_MALLOC, data, 7);
+		end_game(ERR_MALLOC, data, 7); 
 	while (i < W_HEIGHT)
 	{
 		data->frame_buffer[i] = malloc(sizeof(int) * W_WIDTH);

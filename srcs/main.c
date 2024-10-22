@@ -90,26 +90,29 @@ void	move_forward(t_data *data)
 
 	new_x = data->player.pos_x + data->player.dir_x * M_S;
 	new_y = data->player.pos_y + data->player.dir_y * M_S;
-	if (data->map[(int)new_y][(int)new_x] == '0')
+	if (data->map[(int)(new_y)][(int)(new_x)] != '1')
 	{
 		data->player.pos_x = new_x;
 		data->player.pos_y = new_y;
 	}
+	printf("x: %f, y: %f\n", data->player.pos_x, data->player.pos_y);
+	raycasting(data);
 	draw_frame_to_img(data, &data->img);
 }
 
-void	move_left(t_data *data)
+void	move_right(t_data *data)
 {
 	double	new_x;
 	double	new_y;
 
 	new_x = data->player.pos_x - data->player.dir_y * M_S;
 	new_y = data->player.pos_y + data->player.dir_x * M_S;
-	if (data->map[(int)new_y][(int)new_x] == '0')
+	if (data->map[(int)new_y][(int)new_x] != '1')
 	{
 		data->player.pos_x = new_x;
 		data->player.pos_y = new_y;
 	}
+	raycasting(data);
 	draw_frame_to_img(data, &data->img);
 }
 
@@ -120,32 +123,33 @@ void	move_back(t_data *data)
 
 	new_x = data->player.pos_x - data->player.dir_x * M_S;
 	new_y = data->player.pos_y - data->player.dir_y * M_S;
-	if (data->map[(int)new_y][(int)new_x] == '0')
+	if (data->map[(int)new_y][(int)new_x] != '1')
 	{
 		data->player.pos_x = new_x;
 		data->player.pos_y = new_y;
 	}
+	raycasting(data);
 	draw_frame_to_img(data, &data->img);
 }
 
-void	move_right(t_data *data)
+void	move_left(t_data *data)
 {
 	double	new_x;
 	double	new_y;
 
 	new_x = data->player.pos_x + data->player.dir_y * M_S;
 	new_y = data->player.pos_y - data->player.dir_x * M_S;
-	if (data->map[(int)new_y][(int)new_x] == '0')
+	if (data->map[(int)new_y][(int)new_x] != '1')
 	{
 		data->player.pos_x = new_x;
 		data->player.pos_y = new_y;
 	}
+	raycasting(data);
 	draw_frame_to_img(data, &data->img);
 }
 
 int	key_handler(int key, t_data *data)
 {
-	// esc
 	if (key == ESC)
 		end_game(ESC_MSG, data, 7 + W_HEIGHT);
 	if (key == W)
@@ -179,8 +183,6 @@ int main(int ac, char **av)
 	data = parsing(ac, av);
 	if (!data)
 		return (1);
-	printf("\n\nfcolor = %d\n", data->f_color_key);
-	printf("\n\nccolor = %d\n", data->c_color_key);
 	init_game(data);
 	start_game(data);
 	return (free_data(data), 0);
