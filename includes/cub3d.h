@@ -6,7 +6,7 @@
 /*   By: ochetrit <ochetrit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 15:05:27 by ochetrit          #+#    #+#             */
-/*   Updated: 2024/10/23 15:11:50 by ochetrit         ###   ########.fr       */
+/*   Updated: 2024/10/23 17:55:57 by ochetrit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@
 # define MINIMAP_SCALE 0.1
 # define RED 0
 # define GREEN 1
-# define M_S 0.03
-# define R_S 0.03
+# define M_S 0.015
+# define R_S 0.02
 
 /*key*/
 # define DESTROY_NOTIF 17
@@ -63,7 +63,9 @@
 # define ERR_FORM "Error\nInvalid file syntax\n"
 # define ERR_KEY "Error\nInvalid texture key\n"
 # define ERR_FILE "Error\nInvalid file\n"
+# define ERR_NB_KEY "Error\nDuplicates key\n"
 # define ERR_MALLOC "Error\nMalloc failed\n"
+# define ERR_NB_COLOR "Error\nInvalid number of color\n"
 # define ERR_CHAR "Error\nI need a valid char\n"
 # define ERR_COLOR "Error\nInvalid color\n"
 # define ERR_MLX "Error\nMlx failed\n"
@@ -201,6 +203,8 @@ t_map				*ft_maplast(t_map *lst);
 void				init_window(t_data *data);
 int					red_cross(t_data *data);
 int					is_player(char c);
+int					len_path(char *line);
+int					check_if_exists(int *key, t_data *data);
 t_data				*parsing(int ac, char **av);
 
 // DRAW

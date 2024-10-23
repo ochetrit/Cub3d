@@ -6,7 +6,7 @@
 /*   By: ochetrit <ochetrit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 09:21:12 by ochetrit          #+#    #+#             */
-/*   Updated: 2024/10/23 15:24:18 by ochetrit         ###   ########.fr       */
+/*   Updated: 2024/10/23 17:52:55 by ochetrit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,17 +36,6 @@ int	which_one(char *line)
 		return (F);
 	else
 		return (ft_putstr_fd(ERR_FORM, STDERR), ERROR);
-}
-
-int	len_path(char *line)
-{
-	int	len;
-
-	len = 0;
-	while (line[len] && line[len] != ' '
-		&& line[len] != '\t' && line[len] != '\n')
-		len++;
-	return (len);
 }
 
 char	*str_extract(char *line, int *k)
@@ -103,17 +92,17 @@ int	find_path_and_color(t_data *data)
 	while (data->line)
 	{
 		key = which_one(data->line);
-		if (key == NO)
+		if (key == NO && check_if_exists(&key, data))
 			data->path_no = str_extract(data->line, &key);
-		else if (key == SO)
+		else if (key == SO && check_if_exists(&key, data))
 			data->path_so = str_extract(data->line, &key);
-		else if (key == WE)
+		else if (key == WE && check_if_exists(&key, data))
 			data->path_we = str_extract(data->line, &key);
-		else if (key == EA)
+		else if (key == EA && check_if_exists(&key, data))
 			data->path_ea = str_extract(data->line, &key);
-		else if (key == C)
+		else if (key == C && check_if_exists(&key, data))
 			data->c_color = build_color(data->line, &key);
-		else if (key == F)
+		else if (key == F && check_if_exists(&key, data))
 			data->f_color = build_color(data->line, &key);
 		if (key == ERROR)
 			return (free(data->line), get_next_line(data->fd, true), false);

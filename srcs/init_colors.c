@@ -6,7 +6,7 @@
 /*   By: ochetrit <ochetrit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 09:21:20 by ochetrit          #+#    #+#             */
-/*   Updated: 2024/10/23 15:31:17 by ochetrit         ###   ########.fr       */
+/*   Updated: 2024/10/23 17:55:31 by ochetrit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	check_color(char *line)
 		len[0]++;
 	}
 	if (len[0] != 3)
-		return (false);
+		return (ft_putstr_fd(ERR_NB_COLOR, STDERR), false);
 	return (true);
 }
 
