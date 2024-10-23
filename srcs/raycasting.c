@@ -6,7 +6,7 @@
 /*   By: ochetrit <ochetrit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 15:12:09 by nclassea          #+#    #+#             */
-/*   Updated: 2024/10/23 15:33:07 by ochetrit         ###   ########.fr       */
+/*   Updated: 2024/10/23 18:36:51 by ochetrit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,8 @@ void	set_text_pix(t_data *data, t_ray *ray, t_text *text, int x)
 	which_text_dir(text, ray);
 	y = ray->draw_start;
 	text->text_x = (int)(ray->wall_x * TEXT_SIZE);
-	if (ray->side == 0 && ray->dir_x > 0)
+	if ((ray->side == 0 && ray->dir_x < 0) || (ray->side == 1
+			&& ray->dir_y > 0))
 		text->text_x = TEXT_SIZE - text->text_x - 1;
 	text->step = 1.0 * TEXT_SIZE / ray->line_height;
 	text->pos = (ray->draw_start - W_HEIGHT / 2
