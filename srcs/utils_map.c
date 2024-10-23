@@ -6,7 +6,7 @@
 /*   By: ochetrit <ochetrit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 19:25:00 by ochetrit          #+#    #+#             */
-/*   Updated: 2024/10/01 15:06:53 by ochetrit         ###   ########.fr       */
+/*   Updated: 2024/10/23 15:33:23 by ochetrit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	ft_mapadd_back(t_data *data, t_map **head, t_map *new)
 {
 	t_map	*last;
 	int		width;
-
 
 	if (head)
 	{

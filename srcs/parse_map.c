@@ -6,7 +6,7 @@
 /*   By: ochetrit <ochetrit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 15:17:02 by ochetrit          #+#    #+#             */
-/*   Updated: 2024/10/23 13:58:31 by ochetrit         ###   ########.fr       */
+/*   Updated: 2024/10/23 15:34:26 by ochetrit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,16 @@ int	check_spawn(char **map, int height, int width)
 	}
 	if (y == height || x == width || y == 0 || x == 0)
 		return (ft_putstr_fd(ERR_SPWN, STDERR), false);
-	else if (map[y][x - 1] == ' ' || map[y][x + 1] == ' ' || map[y - 1][x] == ' ' || map[y + 1][x] == ' ')
+	else if (map[y][x - 1] == ' ' || map[y][x + 1] == ' '
+		|| map[y - 1][x] == ' ' || map[y + 1][x] == ' ')
 		return (false);
 	return (true);
 }
 
-int check_boarder(char **map)
+int	check_boarder(char **map)
 {
 	int	x;
-	int y;
+	int	y;
 
 	y = 0;
 	x = 0;
@@ -54,7 +55,7 @@ int check_boarder(char **map)
 	while (x >= 0 && (map[y][x] == '1' || map[y][x] == ' '))
 		x--;
 	if (x >= 0)
-		return (ft_putstr_fd(ERR_WALL, STDERR), false); 
+		return (ft_putstr_fd(ERR_WALL, STDERR), false);
 	x++;
 	while (y >= 0 && (map[y][x] == '1' || map[y][x] == ' '))
 		y--;
@@ -67,7 +68,7 @@ int	parse_map(char **map, int height, int width)
 {
 	int	x;
 	int	y;
-	
+
 	y = 0;
 	if (!check_boarder(map))
 		return (false);
@@ -79,7 +80,8 @@ int	parse_map(char **map, int height, int width)
 		{
 			if (map[y][x] == '0')
 			{
-				if (map[y][x + 1] == ' ' || map[y][x - 1] == ' ' || map[y + 1][x] == ' ' || map[y - 1][x] == ' ')
+				if (map[y][x + 1] == ' ' || map[y][x - 1] == ' '
+					|| map[y + 1][x] == ' ' || map[y - 1][x] == ' ')
 					return (ft_putstr_fd(ERR_WALL, STDERR), false);
 			}
 			x++;

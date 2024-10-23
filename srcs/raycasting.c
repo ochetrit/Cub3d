@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nclassea <nclassea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ochetrit <ochetrit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 15:12:09 by nclassea          #+#    #+#             */
-/*   Updated: 2024/10/22 20:06:36 by nclassea         ###   ########.fr       */
+/*   Updated: 2024/10/23 15:33:07 by ochetrit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,8 @@ void	set_text_pix(t_data *data, t_ray *ray, t_text *text, int x)
 	if (ray->side == 0 && ray->dir_x > 0)
 		text->text_x = TEXT_SIZE - text->text_x - 1;
 	text->step = 1.0 * TEXT_SIZE / ray->line_height;
-	text->pos = (ray->draw_start - W_HEIGHT / 2 + ray->line_height / 2) * text->step;
+	text->pos = (ray->draw_start - W_HEIGHT / 2
+			+ ray->line_height / 2) * text->step;
 	while (y < ray->draw_end)
 	{
 		color = data->texture_buffer[text->text_index][TEXT_SIZE

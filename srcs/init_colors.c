@@ -6,7 +6,7 @@
 /*   By: ochetrit <ochetrit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 09:21:20 by ochetrit          #+#    #+#             */
-/*   Updated: 2024/10/23 15:28:51 by ochetrit         ###   ########.fr       */
+/*   Updated: 2024/10/23 15:31:17 by ochetrit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,30 +34,29 @@ int	check_is_char(char *line, int len)
 
 int	check_color(char *line)
 {
-	int	len;
-	int	nb_pxl;
+	int	len[2];
 
 	while (*line != 'C' && *line != 'F' && *line)
 		line++;
 	line++;
-	nb_pxl = 0;
+	len[0] = 0;
 	while (*line != '\n' && *line != '\0')
 	{
 		while ((*line == ' ' || *line == '\t' || *line == ',') && *line)
 			line++;
 		if (!ft_isdigit(*line))
 			return (ft_putstr_fd(ERR_COLOR, STDERR), false);
-		len = 0;
-		while (ft_isdigit(line[len]))
-			len++;
-		if (!check_is_char(line, len))
+		len[1] = 0;
+		while (ft_isdigit(line[len[1]]))
+			len[1]++;
+		if (!check_is_char(line, len[1]))
 			return (ft_putstr_fd(ERR_CHAR, STDERR), false);
-		line += len;
+		line += len[1];
 		while ((*line == ' ' || *line == '\t' || *line == ',') && *line)
 			line++;
-		nb_pxl++;
+		len[0]++;
 	}
-	if (nb_pxl != 3)
+	if (len[0] != 3)
 		return (false);
 	return (true);
 }
