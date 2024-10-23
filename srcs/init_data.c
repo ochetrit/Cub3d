@@ -55,6 +55,7 @@ void	init_datas(t_data *data)
 	data->win = NULL;
 	data->texture_buffer = NULL;
 	data->frame_buffer = NULL;
+	data->map_list = NULL;
 }
 
 t_data	*init_data(char *file)

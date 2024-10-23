@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nclassea <nclassea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ochetrit <ochetrit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 16:07:09 by nclassea          #+#    #+#             */
-/*   Updated: 2024/10/22 19:55:49 by nclassea         ###   ########.fr       */
+/*   Updated: 2024/10/23 15:12:50 by ochetrit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	img_create(t_data *data, t_img *img)
 	img->endian = 0;
 	img->img = mlx_new_image(data->mlx_ptr, W_WIDTH, W_HEIGHT);
 	if (!img->img)
-		end_game(ERR_MLX, data, 2);
+		end_game(ERR_MLX, data, 8 + W_HEIGHT, STDERR);
 	img->addr = (int *)mlx_get_data_addr(img->img, &img->bbp,
 			&img->line_length, &img->endian);
 	return ;

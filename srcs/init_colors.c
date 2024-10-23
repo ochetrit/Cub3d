@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_colors.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nclassea <nclassea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ochetrit <ochetrit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 09:21:20 by ochetrit          #+#    #+#             */
-/*   Updated: 2024/10/22 20:02:18 by nclassea         ###   ########.fr       */
+/*   Updated: 2024/10/23 15:28:51 by ochetrit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ unsigned char	*build_color(char *line, int *key)
 }
 
 void	init_color_key(t_data *data)
-{
+{	
 	data->c_color_key = data->c_color[0] << 16
 		| data->c_color[1] << 8 | data->c_color[2];
 	data->f_color_key = data->f_color[0] << 16

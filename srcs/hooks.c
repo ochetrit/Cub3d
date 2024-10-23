@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nclassea <nclassea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ochetrit <ochetrit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 19:46:03 by nclassea          #+#    #+#             */
-/*   Updated: 2024/10/22 19:46:12 by nclassea         ###   ########.fr       */
+/*   Updated: 2024/10/23 15:13:11 by ochetrit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	key_press(int key, t_data *data)
 {
 	if (key == ESC)
-		end_game(ESC_MSG, data, 8 + W_HEIGHT);
+		end_game(ESC_MSG, data, 8 + W_HEIGHT, STDOUT_FILENO);
 	if (key == W)
 		data->keys.w = 1;
 	if (key == A)

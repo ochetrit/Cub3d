@@ -19,7 +19,7 @@ int	ft_tolower(int c)
 
 /* #include <stdio.h>
 
-int main(void)
+int	main(void)
 {
 	printf("%c", ft_tolower('Z'));
 } */

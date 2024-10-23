@@ -11,50 +11,64 @@
 #                                                                              #
 # **************************************************************************** #
 
-
-SRCS = srcs/main.c srcs/free.c srcs/init_textures.c srcs/init_colors.c srcs/init_data.c srcs/init_map.c srcs/utils_map.c srcs/parse_map.c srcs/init_game.c srcs/draw.c srcs/raycasting.c srcs/raycasting_utils.c srcs/init_ray.c srcs/moves.c srcs/moves2.c srcs/init_game_utils.c srcs/parsing.c srcs/hooks.c
- 
-
-LIB_MLX = minilibx-linux/libmlx.a
-
-OBJS = $(SRCS:.c=.o) ./libft/libft.a
-
 NAME = cub3D
-
 CC = cc
+FLAGS = -Wall -Wextra -Werror -g3
+SRCS = srcs/main.c\
+		srcs/free.c\
+		srcs/init_textures.c\
+		srcs/init_colors.c\
+		srcs/init_data.c\
+		srcs/init_map.c\
+		srcs/utils_map.c\
+		srcs/parse_map.c\
+		srcs/init_game.c\
+		srcs/draw.c\
+		srcs/raycasting.c\
+		srcs/raycasting_utils.c\
+		srcs/init_ray.c\
+		srcs/moves.c\
+		srcs/moves2.c\
+		srcs/init_game_utils.c\
+		srcs/parsing.c\
+		srcs/hooks.c
 
+# LIBFT
+LIBFT_PATH = ./libft
+LIBFT = libft/libft.a
+
+# MLX
+LIB_MLX = minilibx-linux/libmlx.a
+MLX_A = ./minilibx-linux/libmlx.a
+MLX_PATH = minilibx-linux
+MLX_FLAG = -lXext -lX11 -lm -lz
+
+OBJS = $(SRCS:.c=.o)
 RM = rm -rf
 
-FLAGS = -Wall -Wextra -Werror -g3
-
-LDFLAGS = -L./libft -lft
-
-all: $(LIB_MLX) $(LIBFT) $(NAME)
+all: minilibx-linux $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(FLAGS) -o $(NAME) $(OBJS) $(LIB_MLX) -lXext -lX11 -lm -lz
+	@make -C $(LIBFT_PATH)
+	@make -C $(MLX_PATH)
+	$(CC) $(FLAGS) -o $(NAME) $(OBJS) $(LIBFT) $(LIB_MLX) $(MLX_FLAG)
 
 minilibx-linux:
 	git clone https://github.com/42Paris/minilibx-linux.git $@
 
-$(LIB_MLX): minilibx-linux
-			cd minilibx-linux && make
-
-./libft/libft.a: FORCE
-	@$(MAKE) -C libft/
 
 %.o: %.c
 	$(CC) -c $(FLAGS) -I/usr/include -Imlx_linux -O3 -c $< -o $@
 
 clean:
 	$(RM) $(OBJS)
-	@$(MAKE) -C ./libft clean
-	@$(MAKE) -C ./minilibx-linux clean
+	@make clean -C $(LIBFT_PATH)
+	@make clean -C $(MLX_PATH) 
 
 fclean: clean
-	$(RM) $(NAME) minilibx-linux
-	@$(MAKE) -C ./libft fclean
+	$(RM) $(NAME)
+	@make fclean -C $(LIBFT_PATH)
 
 re: fclean all
 
-.PHONY: all clean fclean re FORCE
+.PHONY: all clean fclean re

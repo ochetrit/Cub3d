@@ -17,8 +17,8 @@ void	start_game(t_data *data)
 	set_player(data);
 	raycasting(data);
 	draw_frame_to_img(data, &data->img);
-	mlx_hook(data->win, KEYPRESS, KEYPRESSMASK, key_press, data);
-	mlx_hook(data->win, KEYRELEASE, KEYRELEASEMASK, key_release, data);
+	mlx_hook(data->win, KEYPRESS, 1L << 0, key_press, data);
+	mlx_hook(data->win, KEYRELEASE, 1L << 1, key_release, data);
 	mlx_loop_hook(data->mlx_ptr, game_loop, data);
 	mlx_loop(data->mlx_ptr);
 }

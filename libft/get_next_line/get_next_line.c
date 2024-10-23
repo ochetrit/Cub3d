@@ -6,25 +6,28 @@
 /*   By: ochetrit <ochetrit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 11:29:13 by ochetrit          #+#    #+#             */
-/*   Updated: 2024/09/27 15:45:20 by ochetrit         ###   ########.fr       */
+/*   Updated: 2024/10/23 15:10:18 by ochetrit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*get_next_line(int fd, int prout)
+char	*utils(char *temp)
+{
+	free(temp);
+	temp = NULL;
+	return (NULL);
+}
+
+char	*get_next_line(int fd, int test)
 {
 	static char	*temp;
 	char		*str;
 	int			size;
 	int			i;
 
-	if (prout)
-	{
-		free(temp);
-		temp = NULL;
-		return (NULL);
-	}
+	if (test)
+		return (utils(temp));
 	if (ft_strchr2(temp, '\n') == -1)
 		temp = ft_initialise(temp, fd);
 	if (!temp)
@@ -37,8 +40,6 @@ char	*get_next_line(int fd, int prout)
 		return (str);
 	}
 	str = (char *)malloc((size + 2) * sizeof(char));
-	if (!str)
-		return (NULL);
 	i = -1;
 	while (++i <= size)
 		str[i] = temp[i];

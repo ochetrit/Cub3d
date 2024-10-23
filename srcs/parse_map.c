@@ -6,11 +6,33 @@
 /*   By: ochetrit <ochetrit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 15:17:02 by ochetrit          #+#    #+#             */
-/*   Updated: 2024/10/01 17:41:32 by ochetrit         ###   ########.fr       */
+/*   Updated: 2024/10/23 13:58:31 by ochetrit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
+
+int	check_spawn(char **map, int height, int width)
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	while (map[y])
+	{
+		x = 0;
+		while (map[y][x] && !is_player(map[y][x]))
+			x++;
+		if (is_player(map[y][x]))
+			break ;
+		y++;
+	}
+	if (y == height || x == width || y == 0 || x == 0)
+		return (ft_putstr_fd(ERR_SPWN, STDERR), false);
+	else if (map[y][x - 1] == ' ' || map[y][x + 1] == ' ' || map[y - 1][x] == ' ' || map[y + 1][x] == ' ')
+		return (false);
+	return (true);
+}
 
 int check_boarder(char **map)
 {
@@ -64,5 +86,7 @@ int	parse_map(char **map, int height, int width)
 		}
 		y++;
 	}
+	if (!check_spawn(map, height, width))
+		return (ft_putstr_fd(ERR_SPWN, STDERR), false);
 	return (true);
 }

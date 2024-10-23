@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   init_textures.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nclassea <nclassea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ochetrit <ochetrit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 09:21:12 by ochetrit          #+#    #+#             */
-/*   Updated: 2024/10/22 20:05:39 by nclassea         ###   ########.fr       */
+/*   Updated: 2024/10/23 15:24:18 by ochetrit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
-
-// CORRIGER LE NO ++ caracteres en + (VOIR NO 3)
 
 int	which_one(char *line)
 {
@@ -20,7 +18,7 @@ int	which_one(char *line)
 		return (END);
 	else if (!*line)
 		return (EMPTY);
-	while (*line && (*line == ' ' || *line == '\t'))
+	while (*line && (*line == ' ' || *line == '\t' || *line == '\n'))
 		line++;
 	if (!*line)
 		return (EMPTY);
@@ -37,15 +35,16 @@ int	which_one(char *line)
 	else if (!ft_strncmp(line, "F", 1))
 		return (F);
 	else
-		return (ERROR);
+		return (ft_putstr_fd(ERR_FORM, STDERR), ERROR);
 }
 
-int		len_path(char *line)
+int	len_path(char *line)
 {
-	int		len;
+	int	len;
 
 	len = 0;
-	while (line[len] && line[len] != ' ' && line[len] != '\t' && line[len] != '\n')
+	while (line[len] && line[len] != ' '
+		&& line[len] != '\t' && line[len] != '\n')
 		len++;
 	return (len);
 }
@@ -56,9 +55,10 @@ char	*str_extract(char *line, int *k)
 
 	while (*line && (*line == ' ' || *line == '\t'))
 		line++;
-	line++;
-	if (*k < C)
-		line++;
+	*k = len_path(line);
+	if (*k > 2)
+		return (ft_putstr_fd(ERR_KEY, STDERR), *k = ERROR, NULL);
+	line += *k;
 	while (*line && (*line == ' ' || *line == '\t'))
 		line++;
 	*k = len_path(line);
@@ -66,18 +66,20 @@ char	*str_extract(char *line, int *k)
 	if (!str)
 		return (ft_putstr_fd(ERR_MALLOC, STDERR), *k = ERROR, NULL);
 	*k = -1;
-	while (line[++*k] && line[*k] != ' ' && line[*k] != '\t' && line[*k] != '\n')
+	while (line[++*k] && line[*k] != ' '
+		&& line[*k] != '\t' && line[*k] != '\n')
 		str[*k] = line[*k];
 	str[*k] = '\0';
 	while (line[*k] && (line[*k] == ' ' || line[*k] == '\t'))
 		*k += 1;
-	if (line[*k] != '\n' || *str == '\0')
-		return (free(str), *k = ERROR,  NULL);
+	if (line[*k] != '\n')
+		return (free(str), ft_putstr_fd(ERR_FORM, STDERR), *k = ERROR, NULL);
 	return (str);
 }
 
 int	check_data_content(t_data *data)
 {
+	free(data->line);
 	if (!data->c_color)
 		return (true);
 	else if (!data->f_color)
@@ -115,7 +117,6 @@ int	find_path_and_color(t_data *data)
 			data->f_color = build_color(data->line, &key);
 		if (key == ERROR)
 			return (free(data->line), get_next_line(data->fd, true), false);
-		free(data->line);
 		if (!check_data_content(data))
 			return (true);
 		data->line = get_next_line(data->fd, false);

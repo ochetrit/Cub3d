@@ -12,7 +12,7 @@
 
 #include "../includes/cub3d.h"
 
-void	set_img(t_data *data, t_img *img, char *path)
+void	set_img(t_data *data, t_img *img, char *path, int index)
 {
 	int	size_img;
 
@@ -24,13 +24,13 @@ void	set_img(t_data *data, t_img *img, char *path)
 	img->line_length = 0;
 	img->img = mlx_xpm_file_to_image(data->mlx_ptr, path, &size_img, &size_img);
 	if (!img->img)
-		end_game(TEXT_LOAD_FAILED, data, 2);
+		end_game(TEXT_LOAD_FAILED, data, index, STDERR);
 	if (!img->img)
-		end_game(TEXT_LOAD_FAILED, data, 2);
+		end_game(TEXT_LOAD_FAILED, data, index, STDERR);
 	img->addr = (int *)mlx_get_data_addr(img->img,
 			&img->bbp, &img->line_length, &img->endian);
 	if (!img->addr)
-		end_game(TEXT_LOAD_FAILED, data, 2);
+		end_game(TEXT_LOAD_FAILED, data, index, STDERR);
 	return ;
 }
 
@@ -41,12 +41,12 @@ int	*load_text_img(t_data *data, char *path, int index)
 	int		x;
 	int		y;
 
-	set_img(data, &img, path);
+	set_img(data, &img, path, index);
 	buf = ft_calloc(1, sizeof(int) * (64 * 64));
 	if (!buf)
 	{
 		mlx_destroy_image(data->mlx_ptr, img.img);
-		end_game(ERR_MLX, data, index);
+		end_game(ERR_MLX, data, index, STDERR);
 	}
 	y = 0;
 	while (y < 64)
@@ -67,7 +67,7 @@ void	init_textures(t_data *data)
 {
 	data->texture_buffer = ft_calloc(4, sizeof(int *));
 	if (!data->texture_buffer)
-		end_game(ERR_MALLOC, data, 2);
+		end_game(ERR_MALLOC, data, 2, STDERR);
 	data->texture_buffer[NO] = load_text_img(data, data->path_no, 3);
 	data->texture_buffer[SO] = load_text_img(data, data->path_so, 4);
 	data->texture_buffer[EA] = load_text_img(data, data->path_ea, 5);
@@ -90,12 +90,12 @@ void	init_frame_buffer(t_data *data)
 	else
 		data->frame_buffer = malloc(sizeof(int *) * W_HEIGHT);
 	if (!data->frame_buffer)
-		end_game(ERR_MALLOC, data, 7);
+		end_game(ERR_MALLOC, data, 7, STDERR);
 	while (i < W_HEIGHT)
 	{
 		data->frame_buffer[i] = ft_calloc(W_WIDTH, sizeof(int));
 		if (!data->frame_buffer[i])
-			end_game(ERR_MALLOC, data, 8 + i);
+			end_game(ERR_MALLOC, data, 8 + i, STDERR);
 		i++;
 	}
 }

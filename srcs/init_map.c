@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nclassea <nclassea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ochetrit <ochetrit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 17:33:56 by ochetrit          #+#    #+#             */
-/*   Updated: 2024/10/22 20:04:16 by nclassea         ###   ########.fr       */
+/*   Updated: 2024/10/23 15:17:16 by ochetrit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,5 @@ int	init_map(t_data *data)
 		data->line = get_next_line(data->fd, false);
 	}
 	get_next_line(data->fd, true);
-	if (data->map_start == 0)
-		return (ft_putstr_fd(ERR_SPWN, STDERR), false);
 	return (true);
 }

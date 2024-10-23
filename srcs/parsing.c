@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nclassea <nclassea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ochetrit <ochetrit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 19:44:54 by nclassea          #+#    #+#             */
-/*   Updated: 2024/10/22 19:54:25 by nclassea         ###   ########.fr       */
+/*   Updated: 2024/10/23 15:17:41 by ochetrit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	find_player_pos(t_data *data, t_player *player)
 				n++;
 			}
 			if (n > 1)
-				end_game(ERR_NB_PLAYER, data, 2);
+				end_game(ERR_NB_PLAYER, data, 2, STDERR);
 			x++;
 		}
 		y++;
@@ -74,6 +74,8 @@ t_data	*parsing(int ac, char **av)
 		return (free_data(data), NULL);
 	else if (!build_map(data, *data->map_list, 0))
 		return (free_data(data), NULL);
+	if (data->map_start != 1)
+		return (ft_putstr_fd(ERR_SPWN, STDERR), free_data(data), NULL);
 	else if (!parse_map(data->map, data->map_height, data->map_width))
 		return (free_data(data), NULL);
 	find_player_pos(data, &data->player);

@@ -94,9 +94,9 @@ void	free_buffer(t_data *data, int index)
 		free(data->frame_buffer);
 }
 
-void	end_game(char *msg, t_data *data, int num)
+void	end_game(char *msg, t_data *data, int num, int fd)
 {
-	ft_putstr_fd(msg, STDERR); //Sortie d'erreur si le programme ferme normalement ?
+	ft_putstr_fd(msg, fd);
 	free_buffer(data, num);
 	if (num > 1)
 		mlx_destroy_window(data->mlx_ptr, data->win);
